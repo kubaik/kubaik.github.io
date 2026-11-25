@@ -1,7 +1,7 @@
-2026-11-25 07:41  posts=449
+2026-11-25 21:21  posts=450
 DELETE       0  0%
 IMPROVE    276  61%
-KEEP       173  39%
+KEEP       174  39%
 
 Top reasons:
     276  Tags absent from body

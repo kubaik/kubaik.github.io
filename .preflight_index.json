@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-25T07:40:45.297612",
+  "built_at": "2026-11-25T21:21:02.499499",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5950,6 +5950,11 @@
       "slug": "codebase-due-diligence-read-the-tests-first",
       "title": "Codebase due diligence: read the tests first",
       "summary": "Interview loops optimize for the wrong signal. You spend hours on algorithm puzzles and system design whiteboard sketches, then accept an offer based on a vibe from four people who have all rehearsed the same pitch. The codebase you will actually maintain for the next two years gets maybe fifteen mi"
+    },
+    {
+      "slug": "legacy-systems-what-new-hires-find-in-week-one",
+      "title": "Legacy systems: what new hires find in week one",
+      "summary": "You join a team and the first task is to \"modernise\" a service that has been running since before you had a driver's license. The code is a tangle of PHP 5.6, a cron job that restarts a daemon every hour, and a database with tables named . The instinct is to rewrite it all. The better instinct is to"
     }
   ]
 }

@@ -1,0 +1,150 @@
+# Legacy systems: what new hires find in week one
+
+You join a team and the first task is to "modernise" a service that has been running since before you had a driver's license. The code is a tangle of PHP 5.6, a cron job that restarts a daemon every hour, and a database with tables named `tmp_final_v2`. The instinct is to rewrite it all. The better instinct is to understand why it hasn't been rewritten yet — and to do that before you touch a single line. This post is about the gap between what the documentation says and what the production system actually does, and how to close that gap systematically in your first weeks. The real problem this post solves: you need to decide which parts of a legacy system to leave alone, which to wrap, and which to replace — and you need evidence, not opinions, to make that call.
+
+## The documentation says one thing; the logs say another
+
+Every legacy system has an official story and a real story. The official story lives in a wiki page last edited three years ago, a README that describes a deployment process that no longer exists, and a runbook that says "restart the service" without mentioning that the restart takes 40 minutes and drops in-flight requests. The real story lives in the logs, the database schema, and the tribal knowledge of the one person who still remembers why the `users_archive` table has a trigger that writes to a Slack channel.
+
+The gap between these two stories is where new hires get burned. A typical failure mode: you follow the runbook, restart the service, and discover that the health check endpoint returns 200 before the application has actually connected to the message broker. The service appears healthy, traffic gets routed to it, and requests fail for the next two minutes. The runbook never mentioned this because the person who wrote it knew to wait for a specific log line — a line that isn't documented anywhere.
+
+The counterintuitive part is that the documentation is rarely wrong about *what* the system does; it's wrong about *when* and *under what conditions*. The system does process payments, but only after a nightly batch job populates a staging table. The system does send emails, but only if a feature flag in a config file on a specific server is set to `true`. These conditional behaviours are invisible in the docs because they were added as workarounds and never formalised.
+
+Your job in the first two weeks is not to fix anything. It's to map the conditional behaviour. That means reading logs, tracing requests, and asking the person who has been there longest to walk you through the last three incidents. The goal is a list of assumptions the system makes about its environment — assumptions that are not written down.
+
+## The mechanism: why legacy systems accumulate hidden contracts
+
+Legacy systems are not just old code. They are code plus a set of implicit contracts with the infrastructure around them. A service that has been running for years has likely developed dependencies on:
+
+- **Specific timing**: a cron job that runs at 2 AM assumes the database backup finishes by 1:30 AM. If the backup takes longer, the cron job fails silently.
+- **Specific ordering**: a queue consumer assumes messages arrive in a certain order because the producer has always sent them that way. When a new producer is added, the assumption breaks.
+- **Specific data shapes**: a downstream service parses a JSON field as a string, but the upstream service sometimes sends a number. This works because the upstream service has always sent strings for that field — until a new feature changes it.
+- **Specific infrastructure**: a service assumes it runs on a machine with a local disk at `/mnt/data`. When it's moved to a container, the disk isn't there.
+
+These contracts are not documented because they were never explicit. They emerged from the interaction between the code and its environment. The mechanism is simple: every workaround, every hardcoded path, every "just this once" fix becomes a load-bearing assumption. Over time, the system becomes a lattice of these assumptions, and any change risks breaking one.
+
+The reason this matters for a new hire is that you are most likely to break these contracts inadvertently. You don't know they exist. The person who wrote them may have left. The tests don't cover them because they were never written as tests — they were written as production fixes.
+
+So the first step is to make the implicit explicit. You do that by observing the system in production, not by reading the code. The code tells you what the developers intended; the logs and metrics tell you what actually happens.
+
+## A concrete implementation: building a behaviour map
+
+You can't fix what you can't see. The following approach is a lightweight way to build a behaviour map of a legacy system in your first weeks. It's not exhaustive, but it surfaces the contracts that matter.
+
+### 1. Trace a single request end-to-end
+
+Pick a representative user action — creating an order, sending a message, updating a profile. Follow it through every service, queue, and database call. Use whatever tracing exists, or add temporary logging if you can. The goal is to see the actual path, not the intended one. You'll often find steps that aren't in the architecture diagram: a synchronous call to a third-party API that sometimes times out, a cache that is populated by a separate process, a database view that joins across schemas.
+
+### 2. List every external dependency and its failure mode
+
+For each dependency (database, cache, message broker, external API), ask: what happens when it's slow? What happens when it's down? What happens when it returns unexpected data? The answers are often surprising. A service might retry indefinitely on a 500 error, or it might fail fast and drop the request. Neither is documented.
+
+### 3. Instrument the unknowns
+
+If you can't answer a question from logs, add a metric. For example, if you suspect a cron job sometimes overlaps with another job, add a counter that increments when the job starts and decrements when it finishes. Run it for a week and look at the maximum concurrency. This is a low-risk way to gather evidence.
+
+### 4. Write a one-page "known unknowns" document
+
+List the behaviours you've observed but don't fully understand. Share it with the team. The goal is not to have all the answers but to create a shared list of risks. This document becomes the basis for deciding what to fix and what to leave alone.
+
+Here's a minimal example of how you might instrument a suspected overlap using a simple counter in a shell script that wraps a cron job:
+
+```bash
+#!/bin/bash
+# Wrapper for a legacy cron job to detect overlapping runs.
+# Uses a lock file with a timestamp to record start and end times.
+
+LOCKFILE="/var/run/legacy_job.lock"
+LOGFILE="/var/log/legacy_job_overlap.log"
+
+if [ -e "$LOCKFILE" ]; then
+  echo "$(date -Iseconds) OVERLAP: previous run still active (started $(cat $LOCKFILE))" >> "$LOGFILE"
+  exit 1
+fi
+
+echo "$(date -Iseconds)" > "$LOCKFILE"
+trap 'rm -f "$LOCKFILE"' EXIT
+
+# Original job command here
+/opt/legacy/bin/process_data.sh
+```
+
+This script doesn't fix anything; it just records when overlaps happen. After a week, you have data to decide whether the job needs a proper lock or a schedule change.
+
+## Measuring what you've found: the metrics that matter
+
+You can't improve what you don't measure, but measuring everything is a trap. For legacy systems, focus on a small set of indicators that reveal hidden contracts:
+
+- **Error rate by endpoint or job**: a sudden spike often indicates a broken assumption (e.g., a new data shape).
+- **Latency percentiles (p50, p95, p99)**: p99 spikes can reveal retries, timeouts, or lock contention.
+- **Queue depth and age**: if messages sit in a queue longer than expected, something downstream is slower than the producer assumes.
+- **Cron job duration and overlap**: as above, this reveals timing assumptions.
+- **Database connection pool usage**: if the pool is frequently exhausted, the service may be holding connections longer than intended.
+
+These metrics are not new; the point is to look at them through the lens of "what assumption does this violate?" For example, a p99 latency spike at 2 AM every day might correlate with a backup job that holds a table lock. That's a hidden contract: the service assumes the table is available.
+
+You don't need a full observability platform to start. Existing logs and a few ad-hoc queries can surface a lot. The key is to establish a baseline before you change anything, so you can tell whether your changes made things better or worse.
+
+## Failure modes: when handling legacy systems goes wrong
+
+The biggest risk in handling legacy systems is not technical; it's social. You are a new hire, and the system has been running fine (or fine enough) for years. The people who built it may still be there, and they may interpret your questions as criticism. The failure modes below are common and avoidable.
+
+### Failure mode 1: The rewrite trap
+
+The most seductive failure mode is to propose a rewrite. Rewrites are appealing because they promise a clean slate. In practice, they often fail because the legacy system's behaviour is not fully understood, and the rewrite inadvertently drops features that users depend on. A classic example: a rewrite that removes a "bug" that users have built workarounds around, causing their workflows to break. The safer approach is to strangle the legacy system incrementally — wrap it, route new features to new code, and migrate functionality piece by piece.
+
+### Failure mode 2: Breaking the implicit contract
+
+You change a config value, add an index, or upgrade a library, and suddenly a downstream service fails. The cause is an implicit contract: the downstream service assumed the old behaviour. For example, adding a `NOT NULL` constraint to a column that was previously nullable might break an insert that relied on the default. Before making any change, ask: who else depends on this behaviour? The answer is often not in the codebase.
+
+### Failure mode 3: Over-instrumenting
+
+Adding logs and metrics everywhere can slow the system down and create noise. More importantly, it can distract from the core task: understanding the system. Start with the smallest set of measurements that answer your specific questions. Expand only when needed.
+
+### Failure mode 4: Ignoring the people
+
+The person who has been maintaining the legacy system for years holds the real documentation. If you alienate them, you lose access to that knowledge. Approach with curiosity, not judgment. Ask them to walk you through the last outage. Ask what they would fix if they had time. You'll learn more in an hour than in a week of reading code.
+
+## When this approach is the wrong choice
+
+Not every legacy system deserves this level of investigation. If the system is scheduled for decommissioning within a quarter, or if it's a small internal tool with a handful of users, a full behaviour map may be overkill. The approach above is designed for systems that are business-critical and will be around for at least a year. Signs that you should skip the deep investigation:
+
+- The system has a clear owner who is actively maintaining it and has a roadmap for replacement.
+- The system's failure modes are well-understood and have acceptable business impact.
+- You have been explicitly told to leave it alone unless it breaks.
+
+In those cases, your job is to document what you've learned and move on. The worst outcome is spending weeks mapping a system that is about to be retired.
+
+## Frequently Asked Questions
+
+**How do I convince my manager to let me spend time on legacy investigation?**
+Frame it as risk reduction. Propose a time-boxed investigation (e.g., two days) with a concrete deliverable: a list of hidden dependencies and a recommendation for what to fix first. Managers are more likely to approve a bounded task with a clear output than an open-ended "learn the system" request.
+
+**What if the original developers have left and there's no documentation?**
+Then the system itself is the documentation. Start with the database schema and the logs. The schema reveals the data model and its evolution; the logs reveal actual behaviour. Interview anyone who has interacted with the system, including support staff and users. Their workarounds are clues to hidden contracts.
+
+**Should I fix bugs I find in legacy code?**
+Only if they are causing active problems and you understand the blast radius. A bug that has been dormant for years may be load-bearing: someone may depend on the buggy behaviour. Document it, add a test that captures the current behaviour, and then decide with the team whether to fix it.
+
+**How do I know when I've done enough investigation?**
+When you can predict the system's behaviour in common failure scenarios (dependency down, slow response, unexpected data) and when you have a list of known risks that the team agrees on. You don't need to understand every line of code; you need to understand the contracts.
+
+## The next 30 minutes: list the cron jobs
+
+Open a terminal on the production server (or the configuration management repo) and list every cron job: `crontab -l` for each user, plus `/etc/cron.d/` and any scheduler configuration. For each job, note its schedule, what it does, and who owns it. You'll likely find at least one job that nobody remembers. That list is your first artefact — the beginning of the behaviour map. Share it with your team and ask: "Which of these would break something if it stopped running?" The answers will tell you where to look next.
+
+## Official documentation
+
+- [Google SRE Book: Monitoring Distributed Systems](https://sre.google/sre-book/monitoring-distributed-systems/)
+
+---
+
+### About this article
+
+**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
+
+**How this article was produced:** This site uses an automated LLM pipeline designed and maintained by the author. Before publication, drafts are screened automatically for minimum length, near-duplicate content, invented or unsourced claims and citations, unverifiable product names, and broken internal links. Individual line-by-line human editing is not performed on every post. Figures, benchmarks and scenarios are illustrative unless a source is linked; verify them against official documentation before relying on them in production. See the [AI content policy](/ai-content-policy/).
+
+**Corrections:** Report errors via the [contact page](/contact/). Corrections are applied promptly.
+
+**Last generated:** November 2026

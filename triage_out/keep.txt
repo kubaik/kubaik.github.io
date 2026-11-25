@@ -83,6 +83,7 @@ docs/k6-vs-locust-traffic-models-that-lie/	-
 docs/keep-multi-model-systems-stable-6-rules-that-worked/	-
 docs/kubernetes-or-nomad-the-real-experiment-cost-split/	-
 docs/least-privilege-for-agents-the-config-line-nobody-writes/	-
+docs/legacy-systems-what-new-hires-find-in-week-one/	-
 docs/llm-evals-langsmith-vs-promptfoo-in-prod/	-
 docs/log-audit-costs-without-breaking-compliance/	-
 docs/map-legacy-code-with-ai-before-it-breaks/	-

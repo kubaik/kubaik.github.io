@@ -1461,6 +1461,11 @@
     "reasons": [],
     "words": 2469
   },
+  "legacy-systems-what-new-hires-find-in-week-one": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2370
+  },
   "llm-agents-why-monoliths-win": {
     "verdict": "IMPROVE",
     "reasons": [

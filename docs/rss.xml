@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Nov 2026 07:41:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 21:21:33 +0000</lastBuildDate>
+    <item>
+      <title>Legacy systems: what new hires find in week one</title>
+      <link>https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/</link>
+      <description>New hires break legacy systems by trusting docs over logs. Map hidden contracts, avoid the rewrite trap, and decide what to leave alone.</description>
+      <pubDate>Wed, 25 Nov 2026 21:20:59 +0000</pubDate>
+      <guid>https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/</guid>
+    </item>
     <item>
       <title>Codebase due diligence: read the tests first</title>
       <link>https://kubailabs.com/codebase-due-diligence-read-the-tests-first/</link>
@@ -138,13 +145,6 @@
       <description>Active-active across AWS, Azure and Google Cloud is a distributed-systems build, not a product. Here are its real costs and failure modes.</description>
       <pubDate>Sun, 15 Nov 2026 18:39:30 +0000</pubDate>
       <guid>https://kubailabs.com/multi-region-active-active-the-hidden-costs/</guid>
-    </item>
-    <item>
-      <title>Python deps: uv vs Poetry vs pip-tools</title>
-      <link>https://kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</link>
-      <description>Compare uv, Poetry and pip-tools by resolver, lockfile and environment model, with a worked example, failure modes and a decision checklist.</description>
-      <pubDate>Sun, 15 Nov 2026 05:32:25 +0000</pubDate>
-      <guid>https://kubailabs.com/python-deps-uv-vs-poetry-vs-pip-tools/</guid>
     </item>
   </channel>
 </rss>

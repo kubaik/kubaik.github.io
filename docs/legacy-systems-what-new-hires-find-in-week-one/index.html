@@ -1,0 +1,427 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Legacy systems: what new hires find in week one - Kubai Kevin</title>
+        <meta name="description" content="New hires break legacy systems by trusting docs over logs. Map hidden contracts, avoid the rewrite trap, and decide what to leave alone.">
+        <meta name="keywords" content="legacy systems, technical debt, new hire, legacy system modernization, hidden dependencies legacy code, legacy system risk assessment, how to handle legacy systems, why legacy systems break">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-25T21:20:59.910611">
+        <meta property="article:modified_time" content="2026-11-25T21:20:59.910622">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Legacy systems: what new hires find in week one">
+        <meta property="og:description" content="New hires break legacy systems by trusting docs over logs. Map hidden contracts, avoid the rewrite trap, and decide what to leave alone.">
+        <meta property="og:url" content="https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/legacy-systems-what-new-hires-find-in-week-one.png">
+        <meta property="og:image:alt" content="Legacy systems: what new hires find in week one">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Legacy systems: what new hires find in week one">
+        <meta name="twitter:description" content="New hires break legacy systems by trusting docs over logs. Map hidden contracts, avoid the rewrite trap, and decide what to leave alone.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/legacy-systems-what-new-hires-find-in-week-one.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/#article",
+      "headline": "Legacy systems: what new hires find in week one",
+      "description": "New hires break legacy systems by trusting docs over logs. Map hidden contracts, avoid the rewrite trap, and decide what to leave alone.",
+      "datePublished": "2026-11-25T21:20:59+00:00",
+      "dateModified": "2026-11-25T21:20:59+00:00",
+      "wordCount": 2406,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/"
+      },
+      "keywords": "legacy systems, technical debt, new hire, legacy system modernization, hidden dependencies legacy code, legacy system risk assessment, how to handle legacy systems, why legacy systems break"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Legacy systems: what new hires find in week one",
+          "item": "https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Legacy systems: what new hires find in week one</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Legacy systems: what new hires find in week one</h1>
+                
+                <p class="post-lead">New hires break legacy systems by trusting docs over logs. Map hidden contracts, avoid the rewrite trap, and decide what to leave alone.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/distributed-systems/"
+                       style="text-decoration:none;">Distributed Systems</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/engineering-management/"
+                       style="text-decoration:none;">Engineering Management</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/observability/"
+                       style="text-decoration:none;">Observability</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2406 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-25
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>You join a team and the first task is to "modernise" a service that has been running since before you had a driver's license. The code is a tangle of PHP 5.6, a cron job that restarts a daemon every hour, and a database with tables named <code>tmp_final_v2</code>. The instinct is to rewrite it all. The better instinct is to understand why it hasn't been rewritten yet — and to do that before you touch a single line. This post is about the gap between what the documentation says and what the production system actually does, and how to close that gap systematically in your first weeks. The real problem this post solves: you need to decide which parts of a legacy system to leave alone, which to wrap, and which to replace — and you need evidence, not opinions, to make that call.</p>
+<h2 id="the-documentation-says-one-thing-the-logs-say-another">The documentation says one thing; the logs say another</h2>
+<p>Every legacy system has an official story and a real story. The official story lives in a wiki page last edited three years ago, a README that describes a deployment process that no longer exists, and a runbook that says "restart the service" without mentioning that the restart takes 40 minutes and drops in-flight requests. The real story lives in the logs, the database schema, and the tribal knowledge of the one person who still remembers why the <code>users_archive</code> table has a trigger that writes to a Slack channel.</p>
+<p>The gap between these two stories is where new hires get burned. A typical failure mode: you follow the runbook, restart the service, and discover that the health check endpoint returns 200 before the application has actually connected to the message broker. The service appears healthy, traffic gets routed to it, and requests fail for the next two minutes. The runbook never mentioned this because the person who wrote it knew to wait for a specific log line — a line that isn't documented anywhere.</p>
+<p>The counterintuitive part is that the documentation is rarely wrong about <em>what</em> the system does; it's wrong about <em>when</em> and <em>under what conditions</em>. The system does process payments, but only after a nightly batch job populates a staging table. The system does send emails, but only if a feature flag in a config file on a specific server is set to <code>true</code>. These conditional behaviours are invisible in the docs because they were added as workarounds and never formalised.</p>
+<p>Your job in the first two weeks is not to fix anything. It's to map the conditional behaviour. That means reading logs, tracing requests, and asking the person who has been there longest to walk you through the last three incidents. The goal is a list of assumptions the system makes about its environment — assumptions that are not written down.</p>
+<h2 id="the-mechanism-why-legacy-systems-accumulate-hidden-contracts">The mechanism: why legacy systems accumulate hidden contracts</h2>
+<p>Legacy systems are not just old code. They are code plus a set of implicit contracts with the infrastructure around them. A service that has been running for years has likely developed dependencies on:</p>
+<ul>
+<li><strong>Specific timing</strong>: a cron job that runs at 2 AM assumes the database backup finishes by 1:30 AM. If the backup takes longer, the cron job fails silently.</li>
+<li><strong>Specific ordering</strong>: a queue consumer assumes messages arrive in a certain order because the producer has always sent them that way. When a new producer is added, the assumption breaks.</li>
+<li><strong>Specific data shapes</strong>: a downstream service parses a JSON field as a string, but the upstream service sometimes sends a number. This works because the upstream service has always sent strings for that field — until a new feature changes it.</li>
+<li><strong>Specific infrastructure</strong>: a service assumes it runs on a machine with a local disk at <code>/mnt/data</code>. When it's moved to a container, the disk isn't there.</li>
+</ul>
+<p>These contracts are not documented because they were never explicit. They emerged from the interaction between the code and its environment. The mechanism is simple: every workaround, every hardcoded path, every "just this once" fix becomes a load-bearing assumption. Over time, the system becomes a lattice of these assumptions, and any change risks breaking one.</p>
+<p>The reason this matters for a new hire is that you are most likely to break these contracts inadvertently. You don't know they exist. The person who wrote them may have left. The tests don't cover them because they were never written as tests — they were written as production fixes.</p>
+<p>So the first step is to make the implicit explicit. You do that by observing the system in production, not by reading the code. The code tells you what the developers intended; the logs and metrics tell you what actually happens.</p>
+<h2 id="a-concrete-implementation-building-a-behaviour-map">A concrete implementation: building a behaviour map</h2>
+<p>You can't fix what you can't see. The following approach is a lightweight way to build a behaviour map of a legacy system in your first weeks. It's not exhaustive, but it surfaces the contracts that matter.</p>
+<h3 id="1-trace-a-single-request-end-to-end">1. Trace a single request end-to-end</h3>
+<p>Pick a representative user action — creating an order, sending a message, updating a profile. Follow it through every service, queue, and database call. Use whatever tracing exists, or add temporary logging if you can. The goal is to see the actual path, not the intended one. You'll often find steps that aren't in the architecture diagram: a synchronous call to a third-party API that sometimes times out, a cache that is populated by a separate process, a database view that joins across schemas.</p>
+<h3 id="2-list-every-external-dependency-and-its-failure-mode">2. List every external dependency and its failure mode</h3>
+<p>For each dependency (database, cache, message broker, external API), ask: what happens when it's slow? What happens when it's down? What happens when it returns unexpected data? The answers are often surprising. A service might retry indefinitely on a 500 error, or it might fail fast and drop the request. Neither is documented.</p>
+<h3 id="3-instrument-the-unknowns">3. Instrument the unknowns</h3>
+<p>If you can't answer a question from logs, add a metric. For example, if you suspect a cron job sometimes overlaps with another job, add a counter that increments when the job starts and decrements when it finishes. Run it for a week and look at the maximum concurrency. This is a low-risk way to gather evidence.</p>
+<h3 id="4-write-a-one-page-known-unknowns-document">4. Write a one-page "known unknowns" document</h3>
+<p>List the behaviours you've observed but don't fully understand. Share it with the team. The goal is not to have all the answers but to create a shared list of risks. This document becomes the basis for deciding what to fix and what to leave alone.</p>
+<p>Here's a minimal example of how you might instrument a suspected overlap using a simple counter in a shell script that wraps a cron job:</p>
+<pre><code class="language-bash">#!/bin/bash
+# Wrapper for a legacy cron job to detect overlapping runs.
+# Uses a lock file with a timestamp to record start and end times.
+
+LOCKFILE=&quot;/var/run/legacy_job.lock&quot;
+LOGFILE=&quot;/var/log/legacy_job_overlap.log&quot;
+
+if [ -e &quot;$LOCKFILE&quot; ]; then
+  echo &quot;$(date -Iseconds) OVERLAP: previous run still active (started $(cat $LOCKFILE))&quot; &gt;&gt; &quot;$LOGFILE&quot;
+  exit 1
+fi
+
+echo &quot;$(date -Iseconds)&quot; &gt; &quot;$LOCKFILE&quot;
+trap 'rm -f &quot;$LOCKFILE&quot;' EXIT
+
+# Original job command here
+/opt/legacy/bin/process_data.sh
+</code></pre>
+<p>This script doesn't fix anything; it just records when overlaps happen. After a week, you have data to decide whether the job needs a proper lock or a schedule change.</p>
+<h2 id="measuring-what-youve-found-the-metrics-that-matter">Measuring what you've found: the metrics that matter</h2>
+<p>You can't improve what you don't measure, but measuring everything is a trap. For legacy systems, focus on a small set of indicators that reveal hidden contracts:</p>
+<ul>
+<li><strong>Error rate by endpoint or job</strong>: a sudden spike often indicates a broken assumption (e.g., a new data shape).</li>
+<li><strong>Latency percentiles (p50, p95, p99)</strong>: p99 spikes can reveal retries, timeouts, or lock contention.</li>
+<li><strong>Queue depth and age</strong>: if messages sit in a queue longer than expected, something downstream is slower than the producer assumes.</li>
+<li><strong>Cron job duration and overlap</strong>: as above, this reveals timing assumptions.</li>
+<li><strong>Database connection pool usage</strong>: if the pool is frequently exhausted, the service may be holding connections longer than intended.</li>
+</ul>
+<p>These metrics are not new; the point is to look at them through the lens of "what assumption does this violate?" For example, a p99 latency spike at 2 AM every day might correlate with a backup job that holds a table lock. That's a hidden contract: the service assumes the table is available.</p>
+<p>You don't need a full observability platform to start. Existing logs and a few ad-hoc queries can surface a lot. The key is to establish a baseline before you change anything, so you can tell whether your changes made things better or worse.</p>
+<h2 id="failure-modes-when-handling-legacy-systems-goes-wrong">Failure modes: when handling legacy systems goes wrong</h2>
+<p>The biggest risk in handling legacy systems is not technical; it's social. You are a new hire, and the system has been running fine (or fine enough) for years. The people who built it may still be there, and they may interpret your questions as criticism. The failure modes below are common and avoidable.</p>
+<h3 id="failure-mode-1-the-rewrite-trap">Failure mode 1: The rewrite trap</h3>
+<p>The most seductive failure mode is to propose a rewrite. Rewrites are appealing because they promise a clean slate. In practice, they often fail because the legacy system's behaviour is not fully understood, and the rewrite inadvertently drops features that users depend on. A classic example: a rewrite that removes a "bug" that users have built workarounds around, causing their workflows to break. The safer approach is to strangle the legacy system incrementally — wrap it, route new features to new code, and migrate functionality piece by piece.</p>
+<h3 id="failure-mode-2-breaking-the-implicit-contract">Failure mode 2: Breaking the implicit contract</h3>
+<p>You change a config value, add an index, or upgrade a library, and suddenly a downstream service fails. The cause is an implicit contract: the downstream service assumed the old behaviour. For example, adding a <code>NOT NULL</code> constraint to a column that was previously nullable might break an insert that relied on the default. Before making any change, ask: who else depends on this behaviour? The answer is often not in the codebase.</p>
+<h3 id="failure-mode-3-over-instrumenting">Failure mode 3: Over-instrumenting</h3>
+<p>Adding logs and metrics everywhere can slow the system down and create noise. More importantly, it can distract from the core task: understanding the system. Start with the smallest set of measurements that answer your specific questions. Expand only when needed.</p>
+<h3 id="failure-mode-4-ignoring-the-people">Failure mode 4: Ignoring the people</h3>
+<p>The person who has been maintaining the legacy system for years holds the real documentation. If you alienate them, you lose access to that knowledge. Approach with curiosity, not judgment. Ask them to walk you through the last outage. Ask what they would fix if they had time. You'll learn more in an hour than in a week of reading code.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>Not every legacy system deserves this level of investigation. If the system is scheduled for decommissioning within a quarter, or if it's a small internal tool with a handful of users, a full behaviour map may be overkill. The approach above is designed for systems that are business-critical and will be around for at least a year. Signs that you should skip the deep investigation:</p>
+<ul>
+<li>The system has a clear owner who is actively maintaining it and has a roadmap for replacement.</li>
+<li>The system's failure modes are well-understood and have acceptable business impact.</li>
+<li>You have been explicitly told to leave it alone unless it breaks.</li>
+</ul>
+<p>In those cases, your job is to document what you've learned and move on. The worst outcome is spending weeks mapping a system that is about to be retired.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I convince my manager to let me spend time on legacy investigation?</strong>
+Frame it as risk reduction. Propose a time-boxed investigation (e.g., two days) with a concrete deliverable: a list of hidden dependencies and a recommendation for what to fix first. Managers are more likely to approve a bounded task with a clear output than an open-ended "learn the system" request.</p>
+<p><strong>What if the original developers have left and there's no documentation?</strong>
+Then the system itself is the documentation. Start with the database schema and the logs. The schema reveals the data model and its evolution; the logs reveal actual behaviour. Interview anyone who has interacted with the system, including support staff and users. Their workarounds are clues to hidden contracts.</p>
+<p><strong>Should I fix bugs I find in legacy code?</strong>
+Only if they are causing active problems and you understand the blast radius. A bug that has been dormant for years may be load-bearing: someone may depend on the buggy behaviour. Document it, add a test that captures the current behaviour, and then decide with the team whether to fix it.</p>
+<p><strong>How do I know when I've done enough investigation?</strong>
+When you can predict the system's behaviour in common failure scenarios (dependency down, slow response, unexpected data) and when you have a list of known risks that the team agrees on. You don't need to understand every line of code; you need to understand the contracts.</p>
+<h2 id="the-next-30-minutes-list-the-cron-jobs">The next 30 minutes: list the cron jobs</h2>
+<p>Open a terminal on the production server (or the configuration management repo) and list every cron job: <code>crontab -l</code> for each user, plus <code>/etc/cron.d/</code> and any scheduler configuration. For each job, note its schedule, what it does, and who owns it. You'll likely find at least one job that nobody remembers. That list is your first artefact — the beginning of the behaviour map. Share it with your team and ask: "Which of these would break something if it stopped running?" The answers will tell you where to look next.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google SRE Book: Monitoring Distributed Systems</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-fixes-legacy-code-nobody-owns/">
+                        <h3>AI fixes legacy code nobody owns</h3>
+                        <p>How to combine static analysis, runtime traces, and LLM contextualization to make unowned legacy systems legible, with code and failure modes.</p>
+                        <span class="related-meta">19 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/docs-that-survive-the-bus-factor-fix/">
+                        <h3>Docs that survive: the bus factor fix</h3>
+                        <p>How to write runbooks and design docs that a new engineer can follow without asking the author: explicit audience, exact commands, expected output, and rollback.</p>
+                        <span class="related-meta">15 min read · 21 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/mentoring-without-formal-authority-the-invisible-mandate/">
+                        <h3>Mentoring without formal authority: the invisible mandate</h3>
+                        <p>Mentoring without formal authority fails when advice evaporates after the meeting.</p>
+                        <span class="related-meta">12 min read · 21 November 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
