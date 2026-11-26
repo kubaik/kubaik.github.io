@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-26T07:30:46.151511",
+  "built_at": "2026-11-26T21:09:40.437927",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5960,6 +5960,11 @@
       "slug": "your-health-check-is-lying",
       "title": "Your health check is lying…",
       "summary": "Kubernetes has a probe called . It answers one question: should this pod receive traffic right now? Most teams answer that question with a TCP connect or a that returns as long as the process is alive. That is not readiness. That is liveness wearing a readiness costume. The result is a deployment th"
+    },
+    {
+      "slug": "background-jobs-why-restarts-lose-work",
+      "title": "Background jobs: why restarts lose work",
+      "summary": "A background job that \"runs fine\" in development and \"occasionally loses work\" in production is almost never a bug in the job's business logic. It is a bug in the contract between the job and the process that hosts it. The job assumes it will be allowed to finish. The process assumes it can be kille"
     }
   ]
 }

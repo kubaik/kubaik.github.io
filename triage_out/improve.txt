@@ -84,6 +84,7 @@ docs/apm-lied-about-our-ai-incidents/	Tags absent from body: Reliability, LLMs
 docs/audit-logs-that-scale-skip-the-3am-fire-drills/	Tags absent from body: Java, Reliability
 docs/audit-trails-for-ai-agents-what-breaks-first/	Tags absent from body: Payments, Distributed Systems
 docs/aws-cloudwatch-synthetics-for-ai-pipelines/	Tags absent from body: CI/CD, Payments
+docs/background-jobs-why-restarts-lose-work/	Tags absent from body: Messaging
 docs/backpressure-in-streaming-pipelines-the-silent-killer/	Tags absent from body: Messaging, Reliability
 docs/bank-apis-broke-under-african-2g/	Tags absent from body: Africa Tech, Distributed Systems
 docs/big-model-api-vs-fine-tune-the-2026-math/	Tags absent from body: LLMs

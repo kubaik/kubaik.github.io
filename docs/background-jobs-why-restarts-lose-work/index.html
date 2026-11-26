@@ -1,0 +1,523 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Background jobs: why restarts lose work - Kubai Kevin</title>
+        <meta name="description" content="Background jobs lose work on restart because delivery is not execution. Learn the at-least-once model, idempotency keys, and the ack-after-commit mistake.">
+        <meta name="keywords" content="background jobs, idempotency, at-least-once delivery, survive process restarts, ack after commit pattern, duplicate job execution, how to make background jobs idempotent, why do background jobs run twice after deploy">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-26T21:09:36.153166">
+        <meta property="article:modified_time" content="2026-11-26T21:09:36.153177">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Background jobs: why restarts lose work">
+        <meta property="og:description" content="Background jobs lose work on restart because delivery is not execution. Learn the at-least-once model, idempotency keys, and the ack-after-commit mistake.">
+        <meta property="og:url" content="https://kubailabs.com/background-jobs-why-restarts-lose-work/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/background-jobs-why-restarts-lose-work.png">
+        <meta property="og:image:alt" content="Background jobs: why restarts lose work">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Background jobs: why restarts lose work">
+        <meta name="twitter:description" content="Background jobs lose work on restart because delivery is not execution. Learn the at-least-once model, idempotency keys, and the ack-after-commit mistake.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/background-jobs-why-restarts-lose-work.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/background-jobs-why-restarts-lose-work/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/background-jobs-why-restarts-lose-work/#article",
+      "headline": "Background jobs: why restarts lose work",
+      "description": "Background jobs lose work on restart because delivery is not execution. Learn the at-least-once model, idempotency keys, and the ack-after-commit mistake.",
+      "datePublished": "2026-11-26T21:09:36+00:00",
+      "dateModified": "2026-11-26T21:09:36+00:00",
+      "wordCount": 2637,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/background-jobs-why-restarts-lose-work/"
+      },
+      "keywords": "background jobs, idempotency, at-least-once delivery, survive process restarts, ack after commit pattern, duplicate job execution, how to make background jobs idempotent, why do background jobs run twice after deploy"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Background jobs: why restarts lose work",
+          "item": "https://kubailabs.com/background-jobs-why-restarts-lose-work/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Background jobs: why restarts lose work</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Background jobs: why restarts lose work</h1>
+                
+                <p class="post-lead">Background jobs lose work on restart because delivery is not execution. Learn the at-least-once model, idempotency keys, and the ack-after-commit mistake.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/distributed-systems/"
+                       style="text-decoration:none;">Distributed Systems</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/messaging/"
+                       style="text-decoration:none;">Messaging</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2637 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-26
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>A background job that "runs fine" in development and "occasionally loses work" in production is almost never a bug in the job's business logic. It is a bug in the contract between the job and the process that hosts it. The job assumes it will be allowed to finish. The process assumes it can be killed at any moment. Only one of those assumptions is true.</p>
+<p>This post is about that contract. It explains why restarts — deploys, OOM kills, autoscaling, node drains, spot reclaims — silently eat work, and what a job design has to look like to survive them. The real problem it solves: you cannot tell from reading most job code whether a restart will duplicate a side effect, drop a task, or corrupt state, because the code was written as if the process were immortal.</p>
+<h2 id="the-confusion-the-queue-is-durable-so-the-job-is-durable">The confusion: "the queue is durable, so the job is durable"</h2>
+<p>Most teams reach for a durable queue — SQS, RabbitMQ, Redis with persistence, a database-backed table — and conclude the problem is solved. It is not. The queue's durability only guarantees that a message survives. It says nothing about what happens between the moment a worker receives the message and the moment the side effect is committed.</p>
+<p>That gap is where work dies. A worker dequeues a message, calls an external API, and is killed before it records that the call succeeded. On restart, the message is redelivered. Now the external API has been called twice. Or the worker acknowledges the message first and then does the work; on kill, the message is gone and the work never happened. Both designs are common, both are wrong in different directions, and neither is visible from the queue's dashboard.</p>
+<p>The confusion is treating delivery as execution. Delivery is a transport concern. Execution is a state-machine concern. Restart-safety lives in the second one.</p>
+<h2 id="the-underlying-model-at-least-once-delivery-plus-idempotent-effects">The underlying model: at-least-once delivery plus idempotent effects</h2>
+<p>Nearly every durable queue you will use in practice — SQS, RabbitMQ with manual acks, Kafka consumer groups, a <code>jobs</code> table polled by workers — gives you at-least-once delivery. Not exactly-once. The moment a consumer crashes after doing work but before acknowledging, the system has no way to know whether the work happened, so it redelivers. That is the correct behavior; the alternative is losing messages.</p>
+<p>So the model is fixed: <strong>messages will be delivered more than once, and your job must produce the same end state whether it runs once or five times.</strong> That property is idempotency, and it is the only thing that makes restarts safe.</p>
+<p>There are three places idempotency has to be enforced, and teams usually do only the first:</p>
+<ol>
+<li><strong>The job's own state.</strong> Writing a row twice should not create two rows. Use a natural key or a unique constraint.</li>
+<li><strong>External side effects.</strong> Sending an email, charging a card, calling a third-party API. These are not idempotent by default and need an idempotency key or a deduplication record.</li>
+<li><strong>Downstream consumers.</strong> If the job emits an event, that event will also be duplicated, and its consumers inherit the same obligation.</li>
+</ol>
+<p>A useful mental model: a restart-safe job is a transaction with a checkpoint. The checkpoint records "I have completed step N for task T." On redelivery, the worker reads the checkpoint and skips completed steps. The checkpoint must be written in the same durable store as the effect it describes — or the effect must itself be idempotent — otherwise you have just moved the race condition.</p>
+<h3 id="where-exactly-the-kill-lands">Where exactly the kill lands</h3>
+<p>It helps to enumerate the windows. Consider a worker that does: receive → call API → write DB → ack. A kill can land:</p>
+<table>
+<thead>
+<tr>
+<th>Kill point</th>
+<th>Queue behavior</th>
+<th>Result without idempotency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Before receive</td>
+<td>Message stays queued</td>
+<td>Fine</td>
+</tr>
+<tr>
+<td>After receive, before API call</td>
+<td>Visibility timeout expires, redelivered</td>
+<td>Fine (no effect yet)</td>
+</tr>
+<tr>
+<td>After API call, before DB write</td>
+<td>Redelivered</td>
+<td><strong>Duplicate API call</strong></td>
+</tr>
+<tr>
+<td>After DB write, before ack</td>
+<td>Redelivered</td>
+<td><strong>Duplicate DB write</strong></td>
+</tr>
+<tr>
+<td>After ack</td>
+<td>Message gone</td>
+<td>Fine</td>
+</tr>
+</tbody>
+</table>
+<p>Two of five windows are dangerous, and both are invisible in normal operation because they only open during a crash. That is why restart bugs are so often described as "intermittent" or "only on deploy."</p>
+<h2 id="worked-example-a-database-backed-job-that-survives-a-kill">Worked example: a database-backed job that survives a kill</h2>
+<p>The simplest durable job system most teams can reason about is a table in the same database as the data it touches. No extra infrastructure, and the checkpoint and the effect can share a transaction. Here is a minimal correct version in Python using PostgreSQL via <code>psycopg</code>. It assumes a <code>jobs</code> table with a <code>status</code> column and a <code>dedupe_key</code> unique constraint.</p>
+<pre><code class="language-sql">CREATE TABLE jobs (
+    id           BIGSERIAL PRIMARY KEY,
+    dedupe_key   TEXT NOT NULL UNIQUE,
+    payload      JSONB NOT NULL,
+    status       TEXT NOT NULL DEFAULT 'pending',
+    attempts     INT  NOT NULL DEFAULT 0,
+    locked_until TIMESTAMPTZ,
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX jobs_pending_idx ON jobs (status, locked_until)
+    WHERE status IN ('pending', 'running');
+</code></pre>
+<pre><code class="language-python">import json, time, uuid
+import psycopg
+
+DSN = &quot;postgresql://app:app@localhost/app&quot;
+
+# The side effect must be idempotent. Here we write to a table with a
+# unique constraint on (job_id), so a retry is a no-op, not a duplicate.
+def do_work(cur, job_id: int, payload: dict) -&gt; None:
+    cur.execute(
+        &quot;&quot;&quot;
+        INSERT INTO ledger (job_id, amount)
+        VALUES (%s, %s)
+        ON CONFLICT (job_id) DO NOTHING
+        &quot;&quot;&quot;,
+        (job_id, payload[&quot;amount&quot;]),
+    )
+
+
+def claim_one(conn) -&gt; dict | None:
+    # SELECT ... FOR UPDATE SKIP LOCKED lets multiple workers poll safely.
+    with conn.cursor() as cur:
+        cur.execute(
+            &quot;&quot;&quot;
+            UPDATE jobs
+            SET status = 'running',
+                attempts = attempts + 1,
+                locked_until = now() + interval '5 minutes'
+            WHERE id = (
+                SELECT id FROM jobs
+                WHERE status = 'pending'
+                   OR (status = 'running' AND locked_until &lt; now())
+                ORDER BY id
+                FOR UPDATE SKIP LOCKED
+                LIMIT 1
+            )
+            RETURNING id, payload, attempts
+            &quot;&quot;&quot;
+        )
+        row = cur.fetchone()
+        conn.commit()
+        if row is None:
+            return None
+        return {&quot;id&quot;: row[0], &quot;payload&quot;: row[1], &quot;attempts&quot;: row[2]}
+
+
+def run_once(conn) -&gt; bool:
+    job = claim_one(conn)
+    if job is None:
+        return False
+    try:
+        with conn.transaction():
+            with conn.cursor() as cur:
+                do_work(cur, job[&quot;id&quot;], job[&quot;payload&quot;])
+                cur.execute(
+                    &quot;UPDATE jobs SET status = 'done' WHERE id = %s&quot;,
+                    (job[&quot;id&quot;],),
+                )
+    except Exception:
+        # Leave status='running'; the locked_until expiry will make it
+        # eligible again. Bounded retries are handled by a separate sweeper.
+        conn.rollback()
+        raise
+    return True
+
+
+if __name__ == &quot;__main__&quot;:
+    with psycopg.connect(DSN) as conn:
+        while True:
+            if not run_once(conn):
+                time.sleep(1)
+</code></pre>
+<p>Three properties make this survive a restart:</p>
+<ul>
+<li><strong>The claim is atomic.</strong> <code>UPDATE ... RETURNING</code> with <code>FOR UPDATE SKIP LOCKED</code> means two workers cannot claim the same row, and a killed worker's row becomes claimable again when <code>locked_until</code> passes.</li>
+<li><strong>The effect and the status update share a transaction.</strong> If the process dies between them, both roll back and the job is retried cleanly.</li>
+<li><strong>The effect itself is idempotent.</strong> The <code>ON CONFLICT DO NOTHING</code> on <code>ledger</code> means even if the same job somehow runs twice, the ledger does not double-count. This third property is what protects you from the case the transaction cannot cover: a crash <em>after</em> commit but <em>before</em> the client learns the commit succeeded.</li>
+</ul>
+<p>That last point is subtle and worth stating plainly: a database transaction makes the <em>database</em> consistent, but the worker can still be killed after <code>COMMIT</code> returns and before it does anything else. The job status is <code>done</code>, so on redelivery it will be skipped — fine. But if the design instead acked the queue <em>before</em> committing, the effect would be lost. Order matters: commit the effect, then ack.</p>
+<h2 id="the-patterns-that-actually-break-under-restart">The patterns that actually break under restart</h2>
+<p>A short catalog of failure modes that show up repeatedly, with the mechanism behind each.</p>
+<p><strong>Ack-before-work.</strong> The worker receives a message, immediately deletes it from the queue, then does the work. This is the single most common cause of lost jobs. It looks efficient — no redelivery, no duplicate work — and it fails exactly when you need it not to. The fix is ack-after-commit, accepting that duplicates are possible.</p>
+<p><strong>Non-idempotent external calls.</strong> Charging a card, sending an email, creating a ticket in a third-party system. These have no natural dedupe. The fix is an idempotency key passed to the provider (Stripe, for example, documents an <code>Idempotency-Key</code> header for exactly this) or a local <code>sent_events</code> table with a unique constraint, written in the same transaction as the local state change. Without one of these, every restart during a deploy is a chance to double-charge.</p>
+<p><strong>Visibility timeout shorter than the job.</strong> SQS's default visibility timeout is 30 seconds. A job that takes 90 seconds will be redelivered while the first worker is still running it, and now two workers are doing the same work concurrently. This is not a crash — it happens in normal operation — but it produces the same duplicate effects and is often misdiagnosed as a restart bug. Either extend the timeout or send heartbeats to extend it during long jobs.</p>
+<p><strong>In-memory retry state.</strong> A worker keeps <code>attempts</code> in a local variable and retries in a loop. On kill, the count resets. The job can loop forever across restarts, or give up too early. Retry counts belong in the durable record, not the process.</p>
+<p><strong>Cron with no overlap guard.</strong> A cron job that runs every minute but sometimes takes two minutes will overlap with itself. On a restart, the scheduler may fire immediately, adding a third copy. The fix is a lock (a row lock, an advisory lock, or a distributed lock with a TTL longer than the expected runtime) held for the duration of the job.</p>
+<p><strong>Side effects in the middle of a batch.</strong> A job processes 1,000 rows, updating each. It crashes at row 600. On restart, it starts at row 1 unless the batch is checkpointed. The fix is to make the batch resumable: process in pages keyed by a monotonic id, or record <code>last_processed_id</code> durably after each page.</p>
+<h2 id="common-misreadings">Common misreadings</h2>
+<p><strong>"Exactly-once delivery will fix this."</strong> No mainstream broker gives you exactly-once end-to-end, because the boundary between the broker and your side effect is outside its control. Kafka's "exactly-once semantics" applies to Kafka-to-Kafka pipelines within its transaction model; the moment you call an external API, you are back to at-least-once. Design for duplicates.</p>
+<p><strong>"Idempotency means the job can run twice."</strong> It means the <em>end state</em> is the same after two runs as after one. A job that sends an email twice is not idempotent even if its database row is. Idempotency has to be evaluated at the level of every observable effect, not just the primary write.</p>
+<p><strong>"The queue's retry policy handles failures."</strong> Retry policies handle <em>exceptions</em>. They do not handle a process that vanishes, because there is no exception to catch. Only the visibility timeout or lock expiry brings a killed job back, and only if the worker did not ack first.</p>
+<p><strong>"We use a managed queue, so this is handled."</strong> Managed queues handle transport, redelivery, and dead-lettering. They cannot know whether your side effect committed. That responsibility is always the application's.</p>
+<p><strong>"Graceful shutdown solves it."</strong> SIGTERM handlers help — they let in-flight jobs finish or release their locks — but Kubernetes sends SIGKILL after its grace period, OOM kills are immediate, and node failures do not send signals at all. Graceful shutdown reduces the window; it does not close it.</p>
+<h2 id="designing-the-job-contract">Designing the job contract</h2>
+<p>A restart-safe job has a small set of properties. Treat this as the checklist to apply to any job before it ships:</p>
+<ul>
+<li><strong>Durable claim.</strong> The job is claimed in a store that survives process death, with a lock or visibility timeout longer than the expected runtime.</li>
+<li><strong>Checkpointed progress.</strong> Long jobs record how far they got, so a restart resumes rather than restarts.</li>
+<li><strong>Idempotent effects.</strong> Every external call has an idempotency key or a local dedupe record; every write has a unique constraint or an upsert.</li>
+<li><strong>Commit before ack.</strong> The queue message is acknowledged only after the effect is durable.</li>
+<li><strong>Bounded retries in durable state.</strong> <code>attempts</code> lives in the row, not the process, and a dead-letter path exists for poison messages.</li>
+<li><strong>Observable lag.</strong> You can answer "how old is the oldest unprocessed job?" from a dashboard, not from logs.</li>
+</ul>
+<p>The last one matters more than it sounds. Most restart incidents are discovered by a user noticing missing data, not by monitoring. A simple query — <code>SELECT max(now() - created_at) FROM jobs WHERE status = 'pending'</code> — turned into an alert, catches the class of failure where jobs are being enqueued but not processed, which is what a misconfigured worker or an expired lock looks like from the outside.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I make a background job idempotent when it calls an external API?</strong></p>
+<p>Pass an idempotency key that is stable across retries — usually the job's durable id — and rely on the provider to deduplicate. If the provider does not support idempotency keys, keep a local table of completed side effects with a unique constraint on the job id, and check it before calling. The local table must be written in the same transaction as the state change that depends on the call, or you reintroduce the race.</p>
+<p><strong>Why does my job run twice after every deploy?</strong></p>
+<p>Almost always because the worker was killed after doing the work but before acknowledging the message, so the queue redelivered it. That is correct at-least-once behavior. The duplicate is not the bug; the missing idempotency is. Check whether the job's effects have unique constraints or idempotency keys, and whether the ack happens after the commit.</p>
+<p><strong>What is the difference between a visibility timeout and a lock?</strong></p>
+<p>A visibility timeout is a broker concept: after it expires, the message becomes visible to other consumers, whether or not the original worker is still running. A lock is an application concept: it prevents concurrent execution explicitly. Visibility timeouts are simpler but can cause concurrent duplicates if the job outruns the timeout; locks are more precise but need their own expiry to avoid deadlock after a crash. Many systems use both.</p>
+<p><strong>Should retries be handled by the queue or by the job?</strong></p>
+<p>By the job, for anything where the retry decision depends on the error type. The queue's retry policy is blunt: it retries on any failure until a max count, then dead-letters. A job that distinguishes transient errors (timeouts, 429s) from permanent ones (validation failures) should record attempts durably and decide for itself, using the queue only as the transport and dead-letter backstop.</p>
+<h2 id="the-next-30-minutes">The next 30 minutes</h2>
+<p>Open the file that defines your most business-critical background job and find the line where it acknowledges or deletes the queue message. If that line appears before the database commit or the external API call returns, you have found a job that loses work on restart — move the ack after the commit, add a unique constraint or idempotency key on the effect, and then check the job's visibility timeout against its p99 runtime.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL documentation</a></li>
+<li><a href="https://redis.io/docs/">Redis documentation</a></li>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://kafka.apache.org/documentation/">Apache Kafka documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/graceful-shutdown-sigkill-is-not-the-enemy/">
+                        <h3>Graceful shutdown: SIGKILL is not the enemy</h3>
+                        <p>Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.</p>
+                        <span class="related-meta">14 min read · 20 November 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/webhook-delivery-that-survives-outages/">
+                        <h3>Webhook delivery that survives outages</h3>
+                        <p>How to build durable webhook delivery with a transactional outbox, at-least-once queues, idempotency keys, and a retry schedule that outlasts outages.</p>
+                        <span class="related-meta">13 min read · 2 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/webhooks-2026-retries-idempotency-and-the-9995/">
+                        <h3>Webhook Delivery: Retries, Idempotency, and Durability</h3>
+                        <p>Design reliable webhook ingestion with durable buffering, idempotency keys, bounded retries, and circuit breakers, plus how to measure each guarantee.</p>
+                        <span class="related-meta">11 min read · 19 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

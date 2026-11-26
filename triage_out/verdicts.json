@@ -842,6 +842,13 @@
     "reasons": [],
     "words": 2546
   },
+  "background-jobs-why-restarts-lose-work": {
+    "verdict": "IMPROVE",
+    "reasons": [
+      "Tags absent from body: Messaging"
+    ],
+    "words": 2356
+  },
   "backpressure-in-streaming-pipelines-the-silent-killer": {
     "verdict": "IMPROVE",
     "reasons": [
