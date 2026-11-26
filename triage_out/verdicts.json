@@ -2786,6 +2786,11 @@
     "reasons": [],
     "words": 2851
   },
+  "your-health-check-is-lying": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2611
+  },
   "your-platform-team-is-too-big": {
     "verdict": "IMPROVE",
     "reasons": [

@@ -1,0 +1,513 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Your health check is lying to you - Kubai Kevin</title>
+        <meta name="description" content="Your readiness probe returns 200 but users see 500s.">
+        <meta name="keywords" content="health check, readiness probe, kubernetes readiness, liveness vs readiness, dependency check failure, cascading outage, how to design readiness checks, why does my readiness probe fail">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-26T07:30:43.181709">
+        <meta property="article:modified_time" content="2026-11-26T07:30:43.181722">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Your health check is lying to you">
+        <meta property="og:description" content="Your readiness probe returns 200 but users see 500s.">
+        <meta property="og:url" content="https://kubailabs.com/your-health-check-is-lying/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/your-health-check-is-lying.png">
+        <meta property="og:image:alt" content="Your health check is lying to you">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Your health check is lying to you">
+        <meta name="twitter:description" content="Your readiness probe returns 200 but users see 500s.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/your-health-check-is-lying.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/your-health-check-is-lying/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/your-health-check-is-lying/#article",
+      "headline": "Your health check is lying to you",
+      "description": "Your readiness probe returns 200 but users see 500s.",
+      "datePublished": "2026-11-26T07:30:43+00:00",
+      "dateModified": "2026-11-26T07:30:43+00:00",
+      "wordCount": 2816,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/your-health-check-is-lying/"
+      },
+      "keywords": "health check, readiness probe, kubernetes readiness, liveness vs readiness, dependency check failure, cascading outage, how to design readiness checks, why does my readiness probe fail"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Your health check is lying to you",
+          "item": "https://kubailabs.com/your-health-check-is-lying/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Your health check is lying to you</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Your health check is lying to you</h1>
+                
+                <p class="post-lead">Your readiness probe returns 200 but users see 500s.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/reliability/"
+                       style="text-decoration:none;">Reliability</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/testing/"
+                       style="text-decoration:none;">Testing</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2816 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-26
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Kubernetes has a probe called <code>readinessProbe</code>. It answers one question: should this pod receive traffic right now? Most teams answer that question with a TCP connect or a <code>GET /healthz</code> that returns <code>200 OK</code> as long as the process is alive. That is not readiness. That is liveness wearing a readiness costume. The result is a deployment that looks healthy, a load balancer that sends traffic, and a service that returns 500s because its database connection pool is exhausted or its schema migration hasn't finished. The health check told the truth about the wrong thing.</p>
+<p>The contrarian take: <strong>your health check should fail more often than it does.</strong> A readiness check that only fails when the process is dead is redundant — the orchestrator already knows the process is dead. A useful readiness check fails when the process is alive but cannot serve its purpose. That means it must be allowed to fail during startup, during dependency outages, and during graceful shutdown. If your readiness endpoint has never returned a non-200 in production, it is not a readiness check. It is a decoration.</p>
+<p>This post is about designing checks that reflect real readiness: what to check, what not to check, how to avoid the failure modes that make health checks actively harmful, and how to test that they work before an incident does it for you.</p>
+<h2 id="the-common-advice-check-dependencies-keep-it-simple-fail-fast">The common advice: check dependencies, keep it simple, fail fast</h2>
+<p>The standard guidance from platform teams and documentation is reasonable on its surface:</p>
+<ul>
+<li>A liveness probe should be cheap and only indicate whether the process is running.</li>
+<li>A readiness probe should indicate whether the instance can serve traffic.</li>
+<li>Readiness checks should verify critical dependencies like databases and caches.</li>
+<li>Keep checks fast and avoid heavy queries.</li>
+<li>Fail fast so the orchestrator can route around bad instances.</li>
+</ul>
+<p>None of that is wrong. The problem is that teams implement the first two bullets and skip the third, or implement the third naively and create a cascading failure. The advice is directionally correct but underspecified. "Check dependencies" without a model of <em>which</em> dependencies, <em>how deep</em>, and <em>what the orchestrator will do with the answer</em> leads to checks that either never fail or fail in ways that amplify outages.</p>
+<h2 id="why-get-healthz-returning-200-is-not-readiness">Why <code>GET /healthz</code> returning 200 is not readiness</h2>
+<p>A health endpoint that returns 200 because the HTTP server is listening tells you almost nothing. The HTTP server can accept a connection while the application is unable to do anything useful. Common examples:</p>
+<ul>
+<li>The database connection pool is exhausted because of a connection leak. The process is alive, the HTTP listener is alive, but every request that needs the database will block until the pool timeout.</li>
+<li>A background worker that populates an in-memory cache has crashed. The HTTP server still serves requests, but they all hit a cold cache and time out downstream.</li>
+<li>A schema migration is still running. The process started, the HTTP server bound the port, but queries against the new schema fail.</li>
+<li>The instance lost its credentials or its network route to a dependency. The process is fine; its world is not.</li>
+</ul>
+<p>In each case, a liveness-style check passes and traffic flows to an instance that cannot serve it. The load balancer has no signal to stop sending requests. Users see errors, and the orchestrator sees a healthy pod.</p>
+<p>The fix is not to make the check heavy. The fix is to make it <em>representative</em>: check the things that must be true for a request to succeed, at a cost low enough that you can run the check frequently.</p>
+<h2 id="the-mental-model-readiness-is-a-contract-not-a-ping">The mental model: readiness is a contract, not a ping</h2>
+<p>Think of readiness as a contract between the instance and the router. The instance says: "I can serve requests of the kind you are about to send me, right now, within the latency budget you expect." The router says: "I will send you traffic only while that contract holds."</p>
+<p>A contract has terms. For a typical HTTP service, the terms are:</p>
+<ol>
+<li><strong>The process is running and the HTTP listener is bound.</strong> This is necessary but not sufficient.</li>
+<li><strong>The instance has completed its startup sequence.</strong> Configuration loaded, migrations applied (or confirmed unnecessary), caches warmed to whatever degree the service requires.</li>
+<li><strong>Critical dependencies are reachable and responsive within a bounded time.</strong> Not every dependency — the <em>critical</em> ones, the ones whose absence makes every request fail.</li>
+<li><strong>The instance is not in the process of shutting down.</strong> During graceful shutdown, readiness should flip to false before the process exits, so the router stops sending new requests while in-flight requests drain.</li>
+</ol>
+<p>A readiness check that verifies all four terms will fail during startup, during dependency outages, and during shutdown. That is correct behavior. A check that verifies only term 1 is a liveness check with a misleading name.</p>
+<p>The contract model also clarifies what readiness should <em>not</em> do. It should not verify non-critical dependencies whose failure degrades but does not break the service. It should not run expensive queries that add load. It should not depend on the health of other instances or on the router itself. And it should not be used as a monitoring system — readiness is a routing signal, not an alerting signal.</p>
+<h2 id="the-dependency-check-that-takes-down-your-whole-cluster">The dependency check that takes down your whole cluster</h2>
+<p>Here is the failure mode that makes teams abandon dependency checks entirely. A service checks its database in its readiness probe. The database has a brief hiccup — a failover, a network blip, a slow query that saturates connections. Every instance of the service fails its readiness check at the same time. The orchestrator, seeing all instances unready, stops routing traffic to all of them. The service is now completely down, even though the database recovered seconds later and most requests would have succeeded with a retry.</p>
+<p>This is a cascading failure caused by a health check that was too strict and too correlated. The check was technically correct — the database <em>was</em> unavailable — but the response (remove all instances from rotation) was disproportionate.</p>
+<p>Several mechanisms make this worse:</p>
+<ul>
+<li><strong>Correlated checks.</strong> If every instance checks the same dependency in the same way, they all fail together. There is no diversity to absorb a transient blip.</li>
+<li><strong>No hysteresis.</strong> A single failed check flips readiness to false immediately. A transient timeout becomes a routing decision.</li>
+<li><strong>Deep checks.</strong> A check that runs a query joining several tables is more likely to time out under load, precisely when you need instances to stay in rotation.</li>
+<li><strong>Shared fate.</strong> If the readiness check depends on a central service that is also struggling, the check adds load to the struggling service and removes capacity from the system at the same time.</li>
+</ul>
+<p>The better pattern is to make dependency checks <em>shallow, bounded, and tolerant</em>. Check that a connection can be acquired and a trivial round-trip succeeds within a short timeout. Do not run application queries. Do not check every dependency. And consider whether a dependency failure should remove an instance from rotation at all, or whether it should be handled by retries, circuit breakers, and load shedding at the request level.</p>
+<h2 id="a-readiness-handler-that-fails-for-the-right-reasons">A readiness handler that fails for the right reasons</h2>
+<p>The following Go example is self-contained and illustrates the contract model. It separates liveness from readiness, tracks startup completion, checks a critical dependency with a short timeout, and flips readiness to false during shutdown. It is illustrative, not production-hardened, but the structure is the point.</p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;context&quot;
+    &quot;database/sql&quot;
+    &quot;encoding/json&quot;
+    &quot;net/http&quot;
+    &quot;sync/atomic&quot;
+    &quot;time&quot;
+
+    _ &quot;github.com/lib/pq&quot;
+)
+
+type health struct {
+    db        *sql.DB
+    started   atomic.Bool
+    shutting  atomic.Bool
+}
+
+func (h *health) live(w http.ResponseWriter, r *http.Request) {
+    // Liveness: is the process able to respond at all?
+    w.WriteHeader(http.StatusOK)
+    _, _ = w.Write([]byte(&quot;ok&quot;))
+}
+
+func (h *health) ready(w http.ResponseWriter, r *http.Request) {
+    if h.shutting.Load() {
+        http.Error(w, &quot;shutting down&quot;, http.StatusServiceUnavailable)
+        return
+    }
+    if !h.started.Load() {
+        http.Error(w, &quot;starting&quot;, http.StatusServiceUnavailable)
+        return
+    }
+
+    // Shallow dependency check with a hard timeout.
+    ctx, cancel := context.WithTimeout(r.Context(), 250*time.Millisecond)
+    defer cancel()
+
+    if err := h.db.PingContext(ctx); err != nil {
+        http.Error(w, &quot;database unreachable&quot;, http.StatusServiceUnavailable)
+        return
+    }
+
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    w.WriteHeader(http.StatusOK)
+    _ = json.NewEncoder(w).Encode(map[string]string{&quot;status&quot;: &quot;ready&quot;})
+}
+
+func main() {
+    db, err := sql.Open(&quot;postgres&quot;, &quot;postgres://localhost/app?sslmode=disable&quot;)
+    if err != nil {
+        panic(err)
+    }
+
+    h := &amp;health{db: db}
+
+    mux := http.NewServeMux()
+    mux.HandleFunc(&quot;/livez&quot;, h.live)
+    mux.HandleFunc(&quot;/readyz&quot;, h.ready)
+
+    srv := &amp;http.Server{Addr: &quot;:8080&quot;, Handler: mux}
+
+    // Simulate startup work: migrations, cache warmup, etc.
+    go func() {
+        time.Sleep(2 * time.Second)
+        h.started.Store(true)
+    }()
+
+    // On shutdown, flip readiness before draining.
+    go func() {
+        &lt;-shutdownSignal()
+        h.shutting.Store(true)
+        time.Sleep(5 * time.Second)
+        _ = srv.Shutdown(context.Background())
+    }()
+
+    _ = srv.ListenAndServe()
+}
+
+func shutdownSignal() &lt;-chan struct{} {
+    // Placeholder: wire to os/signal in real code.
+    ch := make(chan struct{})
+    return ch
+}
+</code></pre>
+<p>Several details matter here. The liveness handler does no work — it cannot fail because of a dependency. The readiness handler checks startup state and shutdown state explicitly. The dependency check uses a 250 ms timeout, which is short enough to fail fast but long enough to absorb a normal round-trip. The check is a <code>PingContext</code>, not a query — it verifies connectivity, not schema correctness. And the shutdown path flips readiness before calling <code>srv.Shutdown</code>, so the router stops sending new requests while in-flight requests finish.</p>
+<p>What is missing? Hysteresis. In this example, a single failed ping flips readiness to 503 immediately. In a real system, you might want to require two consecutive failures before marking unready, or to treat a timeout differently from a connection refused. That logic belongs in the handler or in a small state machine around it. The point is that the handler is the place to encode the contract, not a static <code>return 200</code>.</p>
+<h2 id="when-the-common-advice-is-right-keep-liveness-dumb">When the common advice is right: keep liveness dumb</h2>
+<p>The advice to keep liveness checks cheap and dependency-free is correct and underappreciated. Liveness should answer exactly one question: is this process wedged in a way that a restart would fix? A deadlock, an infinite loop, a corrupted state — these are liveness problems. A database outage is not. If your liveness probe checks the database, a database blip will cause the orchestrator to restart every instance of your service, which is the opposite of helpful.</p>
+<p>Similarly, the advice to avoid heavy queries in readiness checks is right. A readiness check runs frequently — every few seconds per instance — and its cost multiplies across the fleet. A check that runs a multi-table join adds load proportional to the number of instances times the check frequency. Under stress, that load is exactly what you don't need.</p>
+<p>And the advice to fail fast is right, with a caveat: fail fast <em>within the check</em>, but do not necessarily propagate a single failure immediately to the router. The check should return quickly. The decision to remove an instance from rotation can be smoothed with hysteresis or with a short grace period.</p>
+<h2 id="the-decision-rule-check-what-breaks-every-request">The decision rule: check what breaks every request</h2>
+<p>The rule I use: <strong>a readiness check should verify exactly those conditions whose absence would cause every request to fail, and nothing else.</strong></p>
+<p>Apply it as a set of questions:</p>
+<ol>
+<li><strong>If this condition is false, will every request fail?</strong> If yes, it belongs in readiness. If only some requests fail, or requests fail slowly, it probably does not.</li>
+<li><strong>Can the condition be checked cheaply and with a bounded timeout?</strong> If not, find a cheaper proxy or move the check to a background process that updates a flag.</li>
+<li><strong>Is the check correlated across all instances?</strong> If every instance checks the same central dependency in the same way, a blip removes all capacity. Consider whether the dependency failure should be handled at the request level instead.</li>
+<li><strong>Does the check add load to a system that is already stressed?</strong> If the dependency is struggling, a readiness check that hammers it makes things worse. Use a connection pool ping, not a query.</li>
+<li><strong>Does the check flip during shutdown?</strong> It must, or you will drop in-flight requests.</li>
+</ol>
+<p>A practical application: for a typical CRUD service, the critical conditions are usually (a) startup complete, (b) database connection pool can acquire a connection, (c) not shutting down. Cache availability is often non-critical — a cache miss is slower but not fatal. Downstream service availability is often non-critical if you have retries and circuit breakers. Message broker connectivity is critical for consumers, not for HTTP request handlers.</p>
+<p>This rule also tells you when <em>not</em> to add a check. If a dependency is non-critical, adding it to readiness turns a degradation into an outage. Resist the urge to check everything. The goal is not a comprehensive status page; the goal is a routing signal.</p>
+<h2 id="testing-readiness-before-an-incident-does">Testing readiness before an incident does</h2>
+<p>A readiness check that has never failed in production is untested. You can test it deliberately:</p>
+<ul>
+<li><strong>Kill the dependency.</strong> In a staging environment, stop the database or block the port. Verify that readiness flips to 503 and that the router stops sending traffic. Verify that liveness stays 200 so the orchestrator does not restart the pod.</li>
+<li><strong>Simulate slow startup.</strong> Add an artificial delay before marking startup complete. Verify that readiness returns 503 during the delay and 200 after, and that the orchestrator does not send traffic prematurely.</li>
+<li><strong>Trigger shutdown.</strong> Send SIGTERM and verify that readiness flips to 503 before the process exits, and that in-flight requests complete.</li>
+<li><strong>Check the timeout.</strong> Introduce a dependency that responds slower than your check timeout. Verify that readiness fails within the expected time and does not hang.</li>
+<li><strong>Check the blast radius.</strong> With multiple instances, verify that a single dependency blip does not remove all instances from rotation simultaneously. If it does, add hysteresis or reconsider the check.</li>
+</ul>
+<p>These tests are cheap and can run in CI against a disposable environment. They catch the two most common failures: a readiness check that never fails (because it checks nothing) and a readiness check that fails too aggressively (because it checks a shared dependency without tolerance).</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Open the file that defines your service's health endpoints. Find the readiness handler. If it returns 200 unconditionally, or if it only checks that the process is alive, replace it with a handler that checks three things: startup completion, a shallow ping to your most critical dependency with a timeout of 250 ms or less, and a shutdown flag. Then run one test: stop the dependency in a local or staging environment and confirm that <code>/readyz</code> returns 503 while <code>/livez</code> still returns 200. If it does not, you have found the bug before your users did.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Should a readiness check hit the database?</strong>
+Yes, if the database is critical to every request, but only with a shallow check like a connection ping and a short timeout. Do not run application queries in the readiness handler. The goal is to verify connectivity, not correctness. If the database is not critical to every request, leave it out of readiness and handle its failures with retries and circuit breakers.</p>
+<p><strong>What is the difference between liveness and readiness in Kubernetes?</strong>
+Liveness answers whether the process should be restarted. Readiness answers whether the pod should receive traffic. A liveness failure triggers a restart; a readiness failure removes the pod from service endpoints. They should not check the same things. Liveness should be cheap and dependency-free; readiness should reflect the ability to serve requests.</p>
+<p><strong>Why does my pod get traffic before it is ready?</strong>
+Because the readiness probe is passing too early. Common causes: the probe checks only that the HTTP server is listening, the initial delay is too short, or the application marks itself ready before migrations or cache warmup complete. Add an explicit startup gate and verify that readiness returns 503 until it is lifted.</p>
+<p><strong>Can a readiness check cause an outage?</strong>
+Yes. If every instance checks the same dependency and that dependency has a transient failure, all instances can fail readiness at once, removing all capacity. This is a correlated failure. Mitigate with shallow checks, timeouts, hysteresis, and by handling non-critical dependency failures at the request level rather than in readiness.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://kubernetes.io/docs/home/">Kubernetes documentation</a></li>
+<li><a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google SRE Book: Monitoring Distributed Systems</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/graceful-shutdown-sigkill-is-not-the-enemy/">
+                        <h3>Graceful shutdown: SIGKILL is not the enemy</h3>
+                        <p>Graceful shutdown for long-running workers fails when jobs outlast the grace period. Add a deadline check and checkpointing to stop losing work on deploy.</p>
+                        <span class="related-meta">14 min read · 20 November 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/7-skills-senior-engineers-need-now-agents-are-live/">
+                        <h3>7 skills senior engineers need now agents are live</h3>
+                        <p>Long-running agents break assumptions built for short-lived processes. Seven skills, how to measure each one, and failure modes to watch for.</p>
+                        <span class="related-meta">15 min read · 5 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/cpu-based-autoscaling-is-mostly-wrong/">
+                        <h3>CPU-based autoscaling is mostly wrong</h3>
+                        <p>CPU-based autoscaling under-provisions when work is blocked, not computing.</p>
+                        <span class="related-meta">14 min read · 20 November 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

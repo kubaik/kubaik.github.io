@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-25T21:21:02.499499",
+  "built_at": "2026-11-26T07:30:46.151511",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5955,6 +5955,11 @@
       "slug": "legacy-systems-what-new-hires-find-in-week-one",
       "title": "Legacy systems: what new hires find in week one",
       "summary": "You join a team and the first task is to \"modernise\" a service that has been running since before you had a driver's license. The code is a tangle of PHP 5.6, a cron job that restarts a daemon every hour, and a database with tables named . The instinct is to rewrite it all. The better instinct is to"
+    },
+    {
+      "slug": "your-health-check-is-lying",
+      "title": "Your health check is lying…",
+      "summary": "Kubernetes has a probe called . It answers one question: should this pod receive traffic right now? Most teams answer that question with a TCP connect or a that returns as long as the process is alive. That is not readiness. That is liveness wearing a readiness costume. The result is a deployment th"
     }
   ]
 }

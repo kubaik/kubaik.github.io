@@ -171,4 +171,5 @@ docs/why-our-schema-survived-ai-scaling/	-
 docs/why-your-multi-agent-system-degraded-slowly/	-
 docs/why-your-routing-layer-will-collapse-at-scale/	-
 docs/world-models-wont-replace-your-backend/	-
+docs/your-health-check-is-lying/	-
 docs/zig-vs-rust-vs-go-compile-errors-compared/	-

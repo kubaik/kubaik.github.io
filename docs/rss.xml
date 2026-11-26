@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Nov 2026 21:21:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 07:31:21 +0000</lastBuildDate>
+    <item>
+      <title>Your health check is lying…</title>
+      <link>https://kubailabs.com/your-health-check-is-lying/</link>
+      <description>Your readiness probe returns 200 but users see 500s.</description>
+      <pubDate>Thu, 26 Nov 2026 07:30:43 +0000</pubDate>
+      <guid>https://kubailabs.com/your-health-check-is-lying/</guid>
+    </item>
     <item>
       <title>Legacy systems: what new hires find in week one</title>
       <link>https://kubailabs.com/legacy-systems-what-new-hires-find-in-week-one/</link>
@@ -138,13 +145,6 @@
       <description>Design agent approval gates that live in the executor, not the prompt: signed single-use tokens, per-action scope, audit trails and anti-rubber-stamp checks.</description>
       <pubDate>Mon, 16 Nov 2026 05:32:11 +0000</pubDate>
       <guid>https://kubailabs.com/human-in-the-loop-when-agents-need-a-human-veto/</guid>
-    </item>
-    <item>
-      <title>Multi-region active-active: the hidden costs</title>
-      <link>https://kubailabs.com/multi-region-active-active-the-hidden-costs/</link>
-      <description>Active-active across AWS, Azure and Google Cloud is a distributed-systems build, not a product. Here are its real costs and failure modes.</description>
-      <pubDate>Sun, 15 Nov 2026 18:39:30 +0000</pubDate>
-      <guid>https://kubailabs.com/multi-region-active-active-the-hidden-costs/</guid>
     </item>
   </channel>
 </rss>

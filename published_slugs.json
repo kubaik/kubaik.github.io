@@ -1433,6 +1433,9 @@
   "world-models-wont-replace-your-backend": {
     "first_seen": "2026-10-21T08:41:23.461513+00:00"
   },
+  "your-health-check-is-lying": {
+    "first_seen": "2026-11-26T07:30:54.155225+00:00"
+  },
   "your-platform-team-is-too-big": {
     "first_seen": "2026-11-14T17:48:53.997743+00:00"
   },

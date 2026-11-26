@@ -297,5 +297,6 @@
   "Interviewing for distributed systems roles",
   "Embedding storage and vector index tradeoffs",
   "How to evaluate a codebase before joining",
-  "Handling legacy systems early in a new role"
+  "Handling legacy systems early in a new role",
+  "Designing health checks that reflect real readiness"
 ]
