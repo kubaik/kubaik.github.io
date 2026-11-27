@@ -1214,6 +1214,11 @@
     "reasons": [],
     "words": 2164
   },
+  "endpoint-you-forgot-to-threat-model": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2121
+  },
   "envelope-encryption-with-cloud-kms-key-rotation-traps": {
     "verdict": "KEEP",
     "reasons": [],

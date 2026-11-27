@@ -638,6 +638,9 @@
   "encryption-at-rest-vs-in-transit-the-gap": {
     "first_seen": "2026-11-23T23:36:53.235803+00:00"
   },
+  "endpoint-you-forgot-to-threat-model": {
+    "first_seen": "2026-11-27T20:52:58.845096+00:00"
+  },
   "envelope-encryption-with-cloud-kms-key-rotation-traps": {
     "first_seen": "2026-11-06T05:44:50.982855+00:00"
   },

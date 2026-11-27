@@ -318,6 +318,7 @@ docs-that-survive-the-bus-factor-fix,100,3089,Docs that survive: the bus factor 
 double-entry-ledger-concurrent-write-errors,100,2922,Double-entry ledger: concurrent write errors,2026-10-01T18:15:25.356366,0,
 ebpf-observability-in-2026-what-actually-works,100,2772,eBPF observability in 2026: what actually works,2026-08-09T17:47:30.553554,0,
 encryption-at-rest-vs-in-transit-the-gap,100,2269,Encryption at rest vs in transit: the gap,2026-11-23T23:36:41.740745,0,
+endpoint-you-forgot-to-threat-model,100,2320,endpoint you forgot to threat model,2026-11-27T20:52:48.399286,0,
 envelope-encryption-with-cloud-kms-key-rotation-traps,100,2461,Envelope encryption with cloud KMS: key rotation traps,2026-11-06T05:44:18.601505,0,
 event-driven-beats-agent-driven-910-times,100,2948,Event-driven systems avoid agent-driven contention,2026-07-30T02:38:09.602424,0,
 event-sourcing-pay-the-complexity-tax-only-here,100,2091,Event sourcing: pay the complexity tax only here,2026-06-09T09:48:26.237900,0,

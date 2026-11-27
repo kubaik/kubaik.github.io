@@ -301,5 +301,6 @@
   "Designing health checks that reflect real readiness",
   "Prompt versioning and evaluation workflows",
   "Designing background jobs that survive restarts",
-  "Transitioning from frontend to backend engineering"
+  "Transitioning from frontend to backend engineering",
+  "Threat modeling a new API endpoint"
 ]
