@@ -74,6 +74,7 @@ docs/envelope-encryption-with-cloud-kms-key-rotation-traps/	-
 docs/evaluate-agents-with-spark-vs-custom-harness/	-
 docs/fastapi-vs-django-vs-flask-api-picks-for-2026/	-
 docs/flaky-tests-reliability-bug-not-test-noise/	-
+docs/frontend-to-backend-stop-learning-frameworks/	-
 docs/graceful-shutdown-sigkill-is-not-the-enemy/	-
 docs/hybrid-cloud-routing-cost-speed-balance-for-sea/	-
 docs/idp-for-ai-2026-stack-evolution/	-

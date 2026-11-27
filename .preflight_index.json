@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-26T21:09:40.437927",
+  "built_at": "2026-11-27T07:25:41.824057",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5965,6 +5965,11 @@
       "slug": "background-jobs-why-restarts-lose-work",
       "title": "Background jobs: why restarts lose work",
       "summary": "A background job that \"runs fine\" in development and \"occasionally loses work\" in production is almost never a bug in the job's business logic. It is a bug in the contract between the job and the process that hosts it. The job assumes it will be allowed to finish. The process assumes it can be kille"
+    },
+    {
+      "slug": "frontend-to-backend-stop-learning-frameworks",
+      "title": "Frontend to backend: stop learning frameworks",
+      "summary": "The standard advice for frontend engineers moving to backend is to learn a backend framework — pick up Express, Django, Rails, or Spring, build a CRUD app, and you're a backend engineer. I think that advice is mostly wrong. Frameworks are the easy part; the hard part is unlearning the assumption tha"
     }
   ]
 }

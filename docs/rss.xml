@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 26 Nov 2026 21:10:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Nov 2026 07:26:20 +0000</lastBuildDate>
+    <item>
+      <title>Frontend to backend: stop learning frameworks</title>
+      <link>https://kubailabs.com/frontend-to-backend-stop-learning-frameworks/</link>
+      <description>Frontend to backend transition: why learning a framework first fails, and the partial-failure, idempotency, and concurrency instincts you actually need.</description>
+      <pubDate>Fri, 27 Nov 2026 07:25:37 +0000</pubDate>
+      <guid>https://kubailabs.com/frontend-to-backend-stop-learning-frameworks/</guid>
+    </item>
     <item>
       <title>Background jobs: why restarts lose work</title>
       <link>https://kubailabs.com/background-jobs-why-restarts-lose-work/</link>
@@ -138,13 +145,6 @@
       <description>RBAC vs ABAC for services: why role explosion and attribute spoofing fail in opposite directions, with runnable policy code and a deny-on-missing test.</description>
       <pubDate>Tue, 17 Nov 2026 07:08:29 +0000</pubDate>
       <guid>https://kubailabs.com/rbac-vs-abac-pick-by-blast-radius/</guid>
-    </item>
-    <item>
-      <title>Kubernetes Requests and Limits: Seven Production Traps</title>
-      <link>https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</link>
-      <description>Why pods get OOMKilled, throttled, or evicted: seven common requests-and-limits mistakes, how to detect each with real metrics, and which to fix first.</description>
-      <pubDate>Mon, 16 Nov 2026 09:09:16 +0000</pubDate>
-      <guid>https://kubailabs.com/7-kubernetes-resource-traps-that-bite-in-prod/</guid>
     </item>
   </channel>
 </rss>

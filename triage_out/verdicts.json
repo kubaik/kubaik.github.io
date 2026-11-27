@@ -1304,6 +1304,11 @@
     ],
     "words": 2422
   },
+  "frontend-to-backend-stop-learning-frameworks": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2374
+  },
   "gateway-api-wont-fix-your-ingress-mess": {
     "verdict": "IMPROVE",
     "reasons": [

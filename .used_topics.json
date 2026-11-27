@@ -300,5 +300,6 @@
   "Handling legacy systems early in a new role",
   "Designing health checks that reflect real readiness",
   "Prompt versioning and evaluation workflows",
-  "Designing background jobs that survive restarts"
+  "Designing background jobs that survive restarts",
+  "Transitioning from frontend to backend engineering"
 ]
