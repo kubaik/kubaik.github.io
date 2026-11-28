@@ -1406,6 +1406,11 @@
     "reasons": [],
     "words": 2294
   },
+  "internal-tools-why-devs-ignore-them": {
+    "verdict": "KEEP",
+    "reasons": [],
+    "words": 2363
+  },
   "iso-20022-where-payment-rails-actually-break": {
     "verdict": "IMPROVE",
     "reasons": [

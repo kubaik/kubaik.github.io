@@ -5,7 +5,14 @@
     <link>https://kubailabs.com</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Nov 2026 20:53:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Nov 2026 06:58:47 +0000</lastBuildDate>
+    <item>
+      <title>Internal tools: why devs ignore them</title>
+      <link>https://kubailabs.com/internal-tools-why-devs-ignore-them/</link>
+      <description>Internal tools fail on latency, auth friction, and missing CLI paths. A step-by-step guide to API-first design, conflict handling, and adoption checks.</description>
+      <pubDate>Sat, 28 Nov 2026 06:58:04 +0000</pubDate>
+      <guid>https://kubailabs.com/internal-tools-why-devs-ignore-them/</guid>
+    </item>
     <item>
       <title>endpoint you forgot to threat model</title>
       <link>https://kubailabs.com/endpoint-you-forgot-to-threat-model/</link>
@@ -138,13 +145,6 @@
       <description>Senior work without the senior title: how freelance engineers build real technical depth through decision logs, timezone-aware design, and payment…</description>
       <pubDate>Wed, 18 Nov 2026 06:33:33 +0000</pubDate>
       <guid>https://kubailabs.com/senior-without-the-title-what-stalls-engineers/</guid>
-    </item>
-    <item>
-      <title>Security engineering isn&apos;t a ladder</title>
-      <link>https://kubailabs.com/security-engineering-isnt-a-ladder/</link>
-      <description>Security engineering careers aren&apos;t a ladder—they&apos;re a lattice.</description>
-      <pubDate>Tue, 17 Nov 2026 20:38:48 +0000</pubDate>
-      <guid>https://kubailabs.com/security-engineering-isnt-a-ladder/</guid>
     </item>
   </channel>
 </rss>

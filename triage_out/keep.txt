@@ -79,6 +79,7 @@ docs/frontend-to-backend-stop-learning-frameworks/	-
 docs/graceful-shutdown-sigkill-is-not-the-enemy/	-
 docs/hybrid-cloud-routing-cost-speed-balance-for-sea/	-
 docs/idp-for-ai-2026-stack-evolution/	-
+docs/internal-tools-why-devs-ignore-them/	-
 docs/json-modes-hidden-costs-revealed/	-
 docs/jwt-sessions-revocation-rotation-storage/	-
 docs/k6-vs-locust-traffic-models-that-lie/	-

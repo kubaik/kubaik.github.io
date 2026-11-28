@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-11-27T20:52:51.726407",
+  "built_at": "2026-11-28T06:58:08.192611",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5975,6 +5975,11 @@
       "slug": "endpoint-you-forgot-to-threat-model",
       "title": "endpoint you forgot to threat model",
       "summary": "A new API endpoint usually starts as a route, a handler, and a happy-path test. It ships. Weeks later, someone notices that the endpoint accepts an header without validation, or that it returns a stack trace on malformed JSON, or that its rate limit is per-IP but the client is behind a shared NAT. N"
+    },
+    {
+      "slug": "internal-tools-why-devs-ignore-them",
+      "title": "Internal tools: why devs ignore them",
+      "summary": "Internal tools fail for a boring reason: they're built for the person who requested them, not the person who has to use them. The request usually arrives as a ticket — \"we need a dashboard for X\" — and gets built as a form with a submit button. Then the same team that asked for it keeps using curl a"
     }
   ]
 }

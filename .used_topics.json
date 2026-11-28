@@ -302,5 +302,9 @@
   "Prompt versioning and evaluation workflows",
   "Designing background jobs that survive restarts",
   "Transitioning from frontend to backend engineering",
-  "Threat modeling a new API endpoint"
+  "Threat modeling a new API endpoint",
+  "Designing tool-use boundaries for agents",
+  "Caching strategies for LLM inference",
+  "Writing design docs that influence decisions",
+  "Designing internal tools developers actually use"
 ]

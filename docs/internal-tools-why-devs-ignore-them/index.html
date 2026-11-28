@@ -1,0 +1,532 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Internal tools: why devs ignore them - Kubai Kevin</title>
+        <meta name="description" content="Internal tools fail on latency, auth friction, and missing CLI paths. A step-by-step guide to API-first design, conflict handling, and adoption checks.">
+        <meta name="keywords" content="internal tools, developer tools, API-first design, internal tool adoption, CLI for internal tools, internal dashboard design, how to design internal tools developers use, why do developers ignore internal tools">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-11-28T06:58:04.464733">
+        <meta property="article:modified_time" content="2026-11-28T06:58:04.464744">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Internal tools: why devs ignore them">
+        <meta property="og:description" content="Internal tools fail on latency, auth friction, and missing CLI paths. A step-by-step guide to API-first design, conflict handling, and adoption checks.">
+        <meta property="og:url" content="https://kubailabs.com/internal-tools-why-devs-ignore-them/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubailabs.com/static/og/internal-tools-why-devs-ignore-them.png">
+        <meta property="og:image:alt" content="Internal tools: why devs ignore them">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Internal tools: why devs ignore them">
+        <meta name="twitter:description" content="Internal tools fail on latency, auth friction, and missing CLI paths. A step-by-step guide to API-first design, conflict handling, and adoption checks.">
+        <meta name="twitter:image" content="https://kubailabs.com/static/og/internal-tools-why-devs-ignore-them.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubailabs.com/internal-tools-why-devs-ignore-them/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubailabs.com/internal-tools-why-devs-ignore-them/#article",
+      "headline": "Internal tools: why devs ignore them",
+      "description": "Internal tools fail on latency, auth friction, and missing CLI paths. A step-by-step guide to API-first design, conflict handling, and adoption checks.",
+      "datePublished": "2026-11-28T06:58:04+00:00",
+      "dateModified": "2026-11-28T06:58:04+00:00",
+      "wordCount": 2502,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubailabs.com/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubailabs.com/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubailabs.com/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubailabs.com"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubailabs.com/internal-tools-why-devs-ignore-them/"
+      },
+      "keywords": "internal tools, developer tools, API-first design, internal tool adoption, CLI for internal tools, internal dashboard design, how to design internal tools developers use, why do developers ignore internal tools"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubailabs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Internal tools: why devs ignore them",
+          "item": "https://kubailabs.com/internal-tools-why-devs-ignore-them/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://kubailabs.com/internal-tools-why-devs-ignore-them/#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Should internal tools use the same auth as public products?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually yes, if your public products use an SSO provider that your employees already have accounts with. Reusing the same identity provider means no separate password store, no separate password reset flow, and consistent offboarding when someone leaves. The main exception is tools that need to be reachable from outside the corporate network; those need a separate access model, and that's a security decision, not a UI decision."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you get engineers to stop using spreadsheets for internal data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The spreadsheet wins because it's fast, familiar, and editable. To displace it, the replacement needs to be faster for the specific task and exportable back to a spreadsheet format. A read-only API plus a CSV export endpoint often gets adopted faster than a polished UI, because it slots into the workflow people already have."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the minimum viable monitoring for an internal tool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Access logs with status codes and latency, grouped by endpoint and user, are enough to answer adoption and reliability questions. Add an alert on the 5xx rate for the tool's own API, not on the dependencies it calls — dependency alerts belong to the dependency's owner. If the tool is used during incidents, also alert when it's unreachable, because that's when people will notice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When should an internal tool be retired?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When its distinct weekly users drop below the cost of maintaining it, or when the workflow it supports has moved elsewhere. The signal is usually that the only traffic is from a scheduled job that someone forgot to turn off. Check the access logs for the last 90 days; if there's no human traffic and one cron caller, delete the cron job first, then the tool."
+      }
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Internal tools: why devs ignore them</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Internal tools: why devs ignore them</h1>
+                
+                <p class="post-lead">Internal tools fail on latency, auth friction, and missing CLI paths. A step-by-step guide to API-first design, conflict handling, and adoption checks.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/api-design/"
+                       style="text-decoration:none;">API Design</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/reliability/"
+                       style="text-decoration:none;">Reliability</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/identity-and-access/"
+                       style="text-decoration:none;">Identity &amp; Access</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling. Articles are LLM-drafted under the author's editorial direction.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2502 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-11-28
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Internal tools fail for a boring reason: they're built for the person who requested them, not the person who has to use them. The request usually arrives as a ticket — "we need a dashboard for X" — and gets built as a form with a submit button. Then the same team that asked for it keeps using curl and a spreadsheet, and the tool becomes a graveyard of good intentions.</p>
+<p>The problem isn't engineering quality. It's that internal tools are judged on adoption, not on features, and adoption is governed by a few unglamorous properties: latency, discoverability, failure behavior, and whether the tool lets a developer stay in their terminal. This post covers how to design for those properties, with concrete patterns you can apply to a tool you already own.</p>
+<h2 id="the-real-problem-internal-tools-compete-with-curl-and-a-shell-history">The real problem: internal tools compete with <code>curl</code> and a shell history</h2>
+<p>Public-facing products compete with other products. Internal tools compete with the path of least resistance that already exists. A developer who needs to check a feature flag can grep the codebase, call the flag service's API with <code>curl</code>, or open the internal dashboard. If the dashboard takes four seconds to load and requires a VPN plus SSO re-auth, the developer will use <code>curl</code> and never mention the dashboard again.</p>
+<p>This means the bar for an internal tool is not "better than nothing." It's "faster than the workaround the user already has." That's a much higher bar, and it changes what you build first. A CLI that wraps the same API as the dashboard will often get more usage than the dashboard, because it composes with the shell. A read-only API endpoint with good docs can beat a UI entirely for the audience that reads docs.</p>
+<p>The design consequence: before writing UI code, find out what the current workaround is and how long it takes. If you can't beat it, don't build. If you can, build the thinnest thing that beats it and ship that.</p>
+<h2 id="prerequisites-what-you-need-before-writing-ui-code">Prerequisites: what you need before writing UI code</h2>
+<p>You need three things before the first line of frontend code:</p>
+<ol>
+<li><strong>A stable API contract.</strong> The tool's UI should be a client of an API that also serves the CLI and any automation. If the UI talks directly to the database or to internal services through a bespoke backend-for-frontend, you've coupled the tool to one interface and made the CLI a second-class citizen.</li>
+<li><strong>An identity story that doesn't require a new login.</strong> If your org uses an SSO provider, the tool should sit behind the same session. A separate username/password table is a non-starter; it also means you now own password resets.</li>
+<li><strong>A way to measure usage without a product analytics stack.</strong> Server access logs are enough. If you can't answer "how many distinct users hit this endpoint last week," you can't tell whether the tool is working.</li>
+</ol>
+<p>A useful exercise: write the API contract as an OpenAPI spec or a typed interface before the UI. If the contract is awkward to call from a shell, it will be awkward in the UI too, and you'll find that out early.</p>
+<h2 id="step-1-design-the-api-as-the-product-the-ui-as-one-client">Step 1: Design the API as the product, the UI as one client</h2>
+<p>The most common structural mistake in internal tools is treating the UI as the product and the API as an implementation detail. Invert it. The API is the product; the UI, CLI, and any scheduled jobs are clients.</p>
+<p>Here's a minimal example of an API-first internal tool in Python using FastAPI, which is a reasonable default because it generates an OpenAPI schema you can feed to client generators:</p>
+<pre><code class="language-python">from fastapi import FastAPI, HTTPException, Depends
+from pydantic import BaseModel
+from typing import Optional
+
+app = FastAPI(title=&quot;flag-admin&quot;, version=&quot;0.1.0&quot;)
+
+class Flag(BaseModel):
+    name: str
+    enabled: bool
+    rollout_pct: int = 0
+
+# In-memory for illustration; replace with your store.
+FLAGS: dict[str, Flag] = {}
+
+def current_user() -&gt; str:
+    # Replace with your SSO integration.
+    return &quot;dev@example.com&quot;
+
+@app.get(&quot;/flags/{name}&quot;, response_model=Flag)
+def get_flag(name: str, user: str = Depends(current_user)):
+    if name not in FLAGS:
+        raise HTTPException(status_code=404, detail=&quot;flag not found&quot;)
+    return FLAGS[name]
+
+@app.put(&quot;/flags/{name}&quot;, response_model=Flag)
+def put_flag(name: str, flag: Flag, user: str = Depends(current_user)):
+    if flag.rollout_pct &lt; 0 or flag.rollout_pct &gt; 100:
+        raise HTTPException(status_code=422, detail=&quot;rollout_pct must be 0-100&quot;)
+    FLAGS[name] = flag
+    return flag
+</code></pre>
+<p>The important design choices here are not the framework. They're:</p>
+<ul>
+<li><strong>Every mutation is idempotent and explicit.</strong> <code>PUT</code> with a full representation means a retry after a timeout doesn't double-apply. Internal tools get retried by scripts; design for it.</li>
+<li><strong>Errors are structured.</strong> <code>HTTPException</code> with a <code>detail</code> string is fine for a human, but if the CLI is going to parse errors, return a JSON body with a stable <code>code</code> field. A CLI that has to regex a prose error message is a CLI that breaks when someone edits the message.</li>
+<li><strong>Auth is a dependency, not middleware sprinkled per-route.</strong> When you add a new endpoint, you get auth by default. The opposite pattern — opt-in auth — is how internal tools end up with an unauthenticated debug endpoint.</li>
+</ul>
+<p>Once the API exists, generate a CLI. You don't need a full CLI framework to start; a shell function or a small script that calls the API is enough. The point is that the CLI and the UI share one contract.</p>
+<h2 id="step-2-make-the-cli-the-primary-interface-not-an-afterthought">Step 2: Make the CLI the primary interface, not an afterthought</h2>
+<p>Developers live in a terminal. A CLI that wraps the API and handles auth via the same SSO token (or a personal access token issued by the same identity provider) will get used during incidents, in scripts, and in CI. A UI will not.</p>
+<p>A minimal CLI in Python using <code>httpx</code> and <code>argparse</code>:</p>
+<pre><code class="language-python">import argparse
+import os
+import sys
+import httpx
+
+BASE = os.environ.get(&quot;FLAG_ADMIN_URL&quot;, &quot;http://localhost:8000&quot;)
+TOKEN = os.environ.get(&quot;FLAG_ADMIN_TOKEN&quot;)
+
+def client() -&gt; httpx.Client:
+    if not TOKEN:
+        sys.exit(&quot;FLAG_ADMIN_TOKEN is not set&quot;)
+    return httpx.Client(base_url=BASE, headers={&quot;Authorization&quot;: f&quot;Bearer {TOKEN}&quot;}, timeout=5.0)
+
+def cmd_get(args):
+    r = client().get(f&quot;/flags/{args.name}&quot;)
+    if r.status_code == 404:
+        sys.exit(f&quot;flag {args.name!r} not found&quot;)
+    r.raise_for_status()
+    print(r.json())
+
+def cmd_set(args):
+    body = {&quot;name&quot;: args.name, &quot;enabled&quot;: args.enabled, &quot;rollout_pct&quot;: args.pct}
+    r = client().put(f&quot;/flags/{args.name}&quot;, json=body)
+    r.raise_for_status()
+    print(r.json())
+
+p = argparse.ArgumentParser(prog=&quot;flagctl&quot;)
+sub = p.add_subparsers(required=True)
+
+g = sub.add_parser(&quot;get&quot;)
+g.add_argument(&quot;name&quot;)
+g.set_defaults(func=cmd_get)
+
+s = sub.add_parser(&quot;set&quot;)
+s.add_argument(&quot;name&quot;)
+s.add_argument(&quot;--enabled&quot;, action=argparse.BooleanOptionalAction, default=True)
+s.add_argument(&quot;--pct&quot;, type=int, default=0)
+s.set_defaults(func=cmd_set)
+
+args = p.parse_args()
+args.func(args)
+</code></pre>
+<p>The CLI is short because the API carries the logic. That's the payoff of API-first design: adding a new operation means adding one subcommand and one endpoint, not a new backend and a new frontend.</p>
+<p>A trap here: don't make the CLI require interactive auth on every invocation. If it opens a browser for SSO on each call, developers will script around it with a long-lived token stored in an environment variable, which is exactly the credential sprawl you were trying to avoid. Support a token from the environment or a config file, document its scope, and make rotation easy.</p>
+<h2 id="step-3-build-the-ui-for-the-20-of-tasks-the-cli-cant-do">Step 3: Build the UI for the 20% of tasks the CLI can't do</h2>
+<p>The UI earns its place when the task is inherently visual or when the user needs to compare many records at once. Good candidates: browsing a list with filters, viewing a diff, approving a batch of changes. Bad candidates: anything a single API call can do.</p>
+<p>Two UI properties matter more than any framework choice:</p>
+<p><strong>Latency on first paint.</strong> Internal tools are often deployed behind a VPN and an SSO proxy. Each of those adds round trips. If your UI makes five API calls on load and each is 200ms, the page feels slow even though the backend is fast. Load one summary endpoint first, then fetch details lazily. This is the same advice as for public apps, but the penalty for ignoring it is higher because the baseline (a shell command) is instant.</p>
+<p><strong>Failure behavior.</strong> Internal tools hit internal services that are sometimes down. A UI that shows a spinner forever when a dependency is unavailable trains users to distrust it. Show partial data with an explicit "stale" indicator, and make the error message name the failing dependency. "Flag service unreachable" is actionable; "Something went wrong" is not.</p>
+<p>A tested pattern is to render the last known good response with a timestamp and a banner when a refresh fails. Users can still read the data they need, and they know it might be stale. This is more work than a spinner but it's the difference between a tool people use during an incident and one they abandon.</p>
+<h2 id="step-4-handle-the-edge-cases-that-make-internal-tools-untrustworthy">Step 4: Handle the edge cases that make internal tools untrustworthy</h2>
+<p>Internal tools fail differently from public products because the failure modes are operational. Three that come up repeatedly:</p>
+<h3 id="concurrent-edits-silently-overwrite-each-other">Concurrent edits silently overwrite each other</h3>
+<p>If two engineers open the same record and both save, the last write wins. For a flag that controls a rollout, that's a correctness bug. Use an <code>ETag</code> or a version field and reject writes with a stale version. In the API above, add a <code>version: int</code> to the <code>Flag</code> model and return <code>409 Conflict</code> when the submitted version doesn't match the stored one. The UI can then show a diff and let the user re-apply.</p>
+<h3 id="authorization-is-checked-at-the-ui-layer-only">Authorization is checked at the UI layer only</h3>
+<p>A common pattern is to hide a button in the UI for users without permission, while the API endpoint accepts the request from anyone authenticated. This is the internal-tool equivalent of client-side validation. Enforce authorization in the API, and make the UI's hiding a convenience, not a control. The test is simple: call the endpoint directly with a low-privilege token and confirm it's rejected.</p>
+<h3 id="the-tool-depends-on-a-service-that-gets-renamed-or-decommissioned">The tool depends on a service that gets renamed or decommissioned</h3>
+<p>Internal services move. A tool that hardcodes a hostname in a config file will break silently when the service moves. Use service discovery or a config value that's owned by the service's team, and add a health check that the tool surfaces. A dashboard that shows "dependency: OK" is more trustworthy than one that shows nothing until it breaks.</p>
+<h2 id="step-5-measure-adoption-with-the-logs-you-already-have">Step 5: Measure adoption with the logs you already have</h2>
+<p>You don't need a product analytics vendor to know whether an internal tool is used. Server access logs, parsed by path and status code, answer most questions:</p>
+<ul>
+<li><strong>Distinct users per week.</strong> If the number is flat or declining after launch, the tool isn't solving the problem.</li>
+<li><strong>Error rate by endpoint.</strong> A high 4xx rate on a specific endpoint usually means the UI is calling it with the wrong shape, or users are hitting a validation rule they don't understand.</li>
+<li><strong>p95 latency per endpoint.</strong> Internal tools are often deployed on small instances; a slow query can make the whole tool feel broken.</li>
+</ul>
+<p>A useful check is to compare the tool's usage against the workaround it was meant to replace. If the flag dashboard has 3 weekly users but the flag service's own API logs show 40 weekly calls from scripts, the dashboard isn't the interface people chose — and that's fine, as long as you know it and invest in the CLI instead.</p>
+<h2 id="verification-a-10-minute-test-before-you-call-it-done">Verification: a 10-minute test before you call it done</h2>
+<p>Before declaring an internal tool ready, run this check with someone who didn't build it:</p>
+<ol>
+<li>Ask them to complete the primary task from a cold start — no browser tab open, no documentation. Time it.</li>
+<li>Ask them to do the same task from the CLI, if a CLI exists. Time it.</li>
+<li>Break a dependency (stop the backing service) and ask them to interpret what the tool shows. If they can't tell what's wrong, the error handling needs work.</li>
+<li>Check the API directly with a low-privilege token for one mutation endpoint. Confirm it's rejected.</li>
+</ol>
+<p>If step 1 takes more than twice as long as step 2, the UI is the wrong primary interface for that task, and you should invest in the CLI first.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="should-internal-tools-use-the-same-auth-as-public-products">Should internal tools use the same auth as public products?</h3>
+<p>Usually yes, if your public products use an SSO provider that your employees already have accounts with. Reusing the same identity provider means no separate password store, no separate password reset flow, and consistent offboarding when someone leaves. The main exception is tools that need to be reachable from outside the corporate network; those need a separate access model, and that's a security decision, not a UI decision.</p>
+<h3 id="how-do-you-get-engineers-to-stop-using-spreadsheets-for-internal-data">How do you get engineers to stop using spreadsheets for internal data?</h3>
+<p>The spreadsheet wins because it's fast, familiar, and editable. To displace it, the replacement needs to be faster for the specific task and exportable back to a spreadsheet format. A read-only API plus a CSV export endpoint often gets adopted faster than a polished UI, because it slots into the workflow people already have.</p>
+<h3 id="whats-the-minimum-viable-monitoring-for-an-internal-tool">What's the minimum viable monitoring for an internal tool?</h3>
+<p>Access logs with status codes and latency, grouped by endpoint and user, are enough to answer adoption and reliability questions. Add an alert on the 5xx rate for the tool's own API, not on the dependencies it calls — dependency alerts belong to the dependency's owner. If the tool is used during incidents, also alert when it's unreachable, because that's when people will notice.</p>
+<h3 id="when-should-an-internal-tool-be-retired">When should an internal tool be retired?</h3>
+<p>When its distinct weekly users drop below the cost of maintaining it, or when the workflow it supports has moved elsewhere. The signal is usually that the only traffic is from a scheduled job that someone forgot to turn off. Check the access logs for the last 90 days; if there's no human traffic and one cron caller, delete the cron job first, then the tool.</p>
+<h2 id="the-next-30-minutes-check-one-tools-access-logs">The next 30 minutes: check one tool's access logs</h2>
+<p>Pick one internal tool your team owns and open its access log for the last seven days. Count distinct users per day and the p95 latency for its main endpoint. If distinct users are in single digits and the p95 is over a second, the tool is not being used for the reason it was built — and the fix is probably a CLI or an API endpoint, not a redesign. Write down the current workaround each user relies on, and compare it to the tool's primary path. That comparison is the design brief for whatever you build next.</p>
+<h2 id="official-documentation">Official documentation</h2>
+<ul>
+<li><a href="https://fastapi.tiangolo.com/">FastAPI documentation</a></li>
+<li><a href="https://docs.stripe.com/api/idempotent_requests">Stripe: idempotent requests</a></li>
+<li><a href="https://sre.google/sre-book/monitoring-distributed-systems/">Google SRE Book: Monitoring Distributed Systems</a></li>
+</ul>
+                
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/contract-testing-is-not-optional/">
+                        <h3>Contract testing is not optional</h3>
+                        <p>Why end-to-end tests and API versioning miss integration breaks, how consumer-driven contracts close the gap, when they fit, and a 30-minute first step.</p>
+                        <span class="related-meta">15 min read · 18 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/self-service-ai-tooling-the-permission-trap/">
+                        <h3>Self-service AI tooling: the permission trap</h3>
+                        <p>Design self-service LLM layers so identity, context and budget controls prevent quiet permission failures instead of only working on the happy path.</p>
+                        <span class="related-meta">14 min read · 9 October 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/graphql-vs-rest-vs-trpc-2026s-api-fight/">
+                        <h3>GraphQL vs REST vs tRPC: 2026’s API fight</h3>
+                        <p>Compare GraphQL, REST and tRPC on caching, type safety, debugging and cost, plus a scoring framework and failure modes for each.</p>
+                        <span class="related-meta">13 min read · 9 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
